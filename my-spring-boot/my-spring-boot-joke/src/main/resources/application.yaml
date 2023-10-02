@@ -1,0 +1,38 @@
+server:
+  port: 8000
+  shutdown: graceful
+  servlet:
+    context-path: /my-spring-boot
+
+spring:
+  application:
+    name: my-spring-boot-joke
+  config:
+    import: classpath:application-redis.yaml
+  profiles:
+    group:
+      dev: app-dev, mysql-dev, redis-dev
+      test: app-test, mysql-test, redis-test
+      prod: app-prod, mysql-prod, redis-prod
+    default: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+
+---
+spring:
+  config:
+    activate:
+      on-profile: app-dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: app-test
+
+---
+spring:
+  config:
+    activate:
+      on-profile: app-prod

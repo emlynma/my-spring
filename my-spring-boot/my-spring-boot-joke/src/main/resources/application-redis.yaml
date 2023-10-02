@@ -1,0 +1,23 @@
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+---
+spring:
+  config:
+    activate:
+      on-profile: redis-dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: redis-test
+
+---
+spring:
+  config:
+    activate:
+      on-profile: redis-prod
