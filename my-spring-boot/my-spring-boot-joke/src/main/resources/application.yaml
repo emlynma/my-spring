@@ -14,7 +14,7 @@ spring:
       dev: app-dev, mysql-dev, redis-dev
       test: app-test, mysql-test, redis-test
       prod: app-prod, mysql-prod, redis-prod
-    default: dev
+    active: dev
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     default-property-inclusion: non_null
