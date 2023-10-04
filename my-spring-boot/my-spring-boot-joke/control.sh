@@ -10,7 +10,7 @@ work_dir=$(cd "$(dirname "${0}")" || exit 1; pwd)
 cd "${work_dir}" || exit 1
 
 app_jar=my-spring-boot-joke.jar
-app_pid=var/joke.pid
+app_pid=var/app.pid
 app_env=$(if [ -n "${2}" ]; then echo "${2}"; else echo "dev"; fi)
 
 java_home=$(which java | head -1)
