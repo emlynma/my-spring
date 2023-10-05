@@ -1,7 +1,7 @@
 #!/bin/bash
-# Description: control.sh start stop restart status
-# Usage: control.sh {start|stop|restart|status}
-# Author: Emlyn Ma
+# description: launch script for this project (spring boot)
+# usage: sh ./control.sh {start|stop|restart|status}
+# author: Emlyn Ma
 
 # exit when any command fails
 set -e

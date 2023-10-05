@@ -1,6 +1,10 @@
 #!/bin/bash
-# Build script for the project
-# Author: Emlyn Ma
+# description: build script for this project (maven)
+# usage: sh ./build.sh
+# author: Emlyn Ma
+
+# exit when any command fails
+set -e
 
 mvn clean package -e -U -DskipTests
 
