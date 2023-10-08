@@ -8,7 +8,7 @@ spring:
   application:
     name: my-spring-boot-joke
   config:
-    import: classpath:application-redis.yaml
+    import: classpath:application-mysql.yaml, classpath:application-redis.yaml
   profiles:
     group:
       dev: app-dev, mysql-dev, redis-dev
