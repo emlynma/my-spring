@@ -1,0 +1,15 @@
+### IntelliJ IDEA ###
+.idea
+*.iml
+**/target/
+**/output/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Other Files ###
+*.class
+*.log
