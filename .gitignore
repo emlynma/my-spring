@@ -1,6 +1,16 @@
-# idea
+### IntelliJ IDEA ###
 .idea
-.iml
 
-# maven
+### VS Code ###
+.vscode/
+
+### maven
 target
+
+### gradle
+.gradle
+build
+!gradle/wrapper/gradle-wrapper.jar
+
+### project
+logs
