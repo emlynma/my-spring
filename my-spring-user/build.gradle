@@ -1,8 +1,5 @@
 apply plugin: 'org.springframework.boot'
 
-group = 'com.emlynma'
-version = '0.0.1-SNAPSHOT'
-
 dependencies {
     implementation project(':my-spring-core')
 }
