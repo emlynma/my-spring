@@ -1,18 +1,19 @@
-package com.emlynma.spring.core.configurer;
+package com.emlynma.spring.core.config;
 
-import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
-@SpringBootConfiguration
-public class WebConfigurer implements WebMvcConfigurer {
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         // Disable StringHttpMessageConverter
         converters.removeIf(converter -> converter.getClass().isAssignableFrom(StringHttpMessageConverter.class));
     }
+
 }

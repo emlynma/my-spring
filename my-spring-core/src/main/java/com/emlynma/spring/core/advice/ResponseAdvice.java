@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.aop.advice;
+package com.emlynma.spring.core.advice;
 
 import com.emlynma.spring.core.ApiResponse;
 import com.emlynma.spring.core.util.JsonUtils;
@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @Slf4j
 @Order(1)
 @RestControllerAdvice
-public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
+public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(@NonNull MethodParameter returnType,

@@ -3,7 +3,7 @@ package com.emlynma.spring.core.util;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
-import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -16,18 +16,18 @@ public abstract class RetryUtils {
         return execute(supplier, null, null, DEFAULT_COUNT, DEFAULT_SLEEP);
     }
 
-    public static <T> T execute(Supplier<T> supplier, Consumer<Throwable> consumer) {
-        return execute(supplier, consumer, null, DEFAULT_COUNT, DEFAULT_SLEEP);
+    public static <T> T execute(Supplier<T> supplier, Function<Throwable, T> function) {
+        return execute(supplier, function, null, DEFAULT_COUNT, DEFAULT_SLEEP);
     }
 
-    public static <T> T execute(Supplier<T> supplier, Consumer<Throwable> consumer, Predicate<T> predicate) {
-        return execute(supplier, consumer, predicate, DEFAULT_COUNT, DEFAULT_SLEEP);
+    public static <T> T execute(Supplier<T> supplier, Function<Throwable, T> function, Predicate<T> predicate) {
+        return execute(supplier, function, predicate, DEFAULT_COUNT, DEFAULT_SLEEP);
     }
 
     /**
      *
      * @param supplier  方法执行器
-     * @param consumer  异常处理器
+     * @param function  异常处理器
      * @param predicate 结果判断器
      * @param count     重试次数
      * @param sleep     重试间隔
@@ -35,7 +35,7 @@ public abstract class RetryUtils {
      * @param <T>       返回值类型
      */
     public static <T> @Nullable T execute(@NonNull Supplier<T> supplier,
-                                          Consumer<Throwable> consumer,
+                                          Function<Throwable, T> function,
                                           Predicate<T> predicate,
                                           int count, int sleep) {
         T result = null;
@@ -57,8 +57,8 @@ public abstract class RetryUtils {
             }
         }
         // 异常处理
-        if (throwable != null && consumer != null) {
-            consumer.accept(throwable);
+        if (throwable != null && function != null) {
+            result = function.apply(throwable);
         }
         return result;
     }

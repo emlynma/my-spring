@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.aop.advice;
+package com.emlynma.spring.core.advice;
 
 import lombok.NonNull;
 import org.springframework.core.MethodParameter;

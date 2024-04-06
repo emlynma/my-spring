@@ -1,6 +1,6 @@
 package com.emlynma.spring.core.util;
 
-import com.emlynma.spring.core.constant.EnvEnum;
+import com.emlynma.spring.core.enums.EnvEnum;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
