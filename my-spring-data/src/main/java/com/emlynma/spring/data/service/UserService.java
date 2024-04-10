@@ -4,8 +4,7 @@ import com.emlynma.spring.data.entity.User;
 import com.emlynma.spring.data.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.util.Assert;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +16,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public User findByUid(Long uid) {
+        Assert.notNull(uid, "id must not be null");
+        return userRepository.findByUid(uid);
     }
 
 }

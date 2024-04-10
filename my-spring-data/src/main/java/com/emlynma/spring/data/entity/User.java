@@ -1,6 +1,7 @@
 package com.emlynma.spring.data.entity;
 
 import com.emlynma.spring.core.util.JsonUtils;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -37,6 +38,7 @@ public class User {
     private LocalDateTime updateTime;
 
     @Data
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ExtraInfo {
         private Boolean isStudent;
     }
@@ -46,7 +48,7 @@ public class User {
     public enum Status {
         INIT(0)
         ;
-        private final int code;
+        private final Integer code;
         public static Status valueOf(int code) {
             return Arrays.stream(Status.values()).filter(s -> s.code == code).findAny().orElse(null);
         }
