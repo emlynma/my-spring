@@ -2,9 +2,7 @@ package com.emlynma.spring.data.entity;
 
 import com.emlynma.spring.core.util.JsonUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.convert.ReadingConverter;
@@ -15,7 +13,6 @@ import org.springframework.lang.NonNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 @Data
 @Table("user")
@@ -29,7 +26,7 @@ public class User {
     private String email;
     private LocalDate birthday;
     private Integer sex;
-    private Status status;
+    private Integer status;
     @Column("extra_info")
     private ExtraInfo extraInfo;
     @Column("create_time")
@@ -41,17 +38,6 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ExtraInfo {
         private Boolean isStudent;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public enum Status {
-        INIT(0)
-        ;
-        private final Integer code;
-        public static Status valueOf(int code) {
-            return Arrays.stream(Status.values()).filter(s -> s.code == code).findAny().orElse(null);
-        }
     }
 
     @ReadingConverter
@@ -67,22 +53,6 @@ public class User {
         @Override
         public String convert(@NonNull ExtraInfo source) {
             return JsonUtils.toJson(source);
-        }
-    }
-
-    @ReadingConverter
-    public static class StatusReadingConverter implements Converter<Integer, Status> {
-        @Override
-        public Status convert(@NonNull Integer source) {
-            return Status.valueOf(source);
-        }
-    }
-
-    @WritingConverter
-    public static class StatusWritingConverter implements Converter<Status, Integer> {
-        @Override
-        public Integer convert(@NonNull Status source) {
-            return source.code;
         }
     }
 

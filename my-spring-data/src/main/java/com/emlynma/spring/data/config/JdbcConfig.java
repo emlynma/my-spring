@@ -11,15 +11,13 @@ import java.util.List;
 
 @Configuration
 @EnableJdbcRepositories(basePackages = "com.emlynma.spring.data.repository")
-public class DataConfig extends AbstractJdbcConfiguration {
+public class JdbcConfig extends AbstractJdbcConfiguration {
 
     @Override @NonNull
     protected List<?> userConverters() {
         return Arrays.asList(
                 new User.ExtraInfoReadingConverter(),
-                new User.ExtraInfoWritingConverter(),
-                new User.StatusReadingConverter(),
-                new User.StatusWritingConverter()
+                new User.ExtraInfoWritingConverter()
         );
     }
 
