@@ -1,4 +1,0 @@
-rootProject.name = 'my-spring'
-include 'my-spring-core'
-include 'my-spring-data'
-include 'my-spring-user'

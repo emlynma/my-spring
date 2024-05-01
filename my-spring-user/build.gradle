@@ -1,6 +1,0 @@
-apply plugin: 'org.springframework.boot'
-
-dependencies {
-    implementation project(':my-spring-core')
-    implementation project(':my-spring-data')
-}

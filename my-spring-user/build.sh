@@ -3,14 +3,13 @@
 # Usage: sh build.sh
 # Author: Emlyn Ma
 
-# exit when any command fails
 set -e
 
-../gradlew clean bootJar
+mvn clean package -e -U -DskipTests
 
 rm -rf output && mkdir output
 
 cp control.sh output/
-mv build/libs/*.jar output/
+mv target/*.jar output/
 
-../gradlew clean
+rm -rf target
