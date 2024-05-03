@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.List;
 
 @Slf4j
@@ -27,9 +28,10 @@ public class RedisUtils {
         frequencyScript = RedisScript.of(new ClassPathResource("lua/frequency.lua"), Boolean.class);
     }
 
-    public boolean set(String key, Object value) {
+    public boolean set(String key, Object value, long expire) {
+        Duration expireDuration = Duration.ofSeconds(expire);
         return RetryUtils.execute(() -> {
-            redisTemplate.opsForValue().set(key, value);
+            redisTemplate.opsForValue().set(key, value, expireDuration);
             return true;
         }, e -> {
             log.warn("{}", BaseErrorCode.REDIS_ERROR, e);
