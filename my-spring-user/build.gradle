@@ -3,4 +3,6 @@ apply plugin: 'org.springframework.boot'
 dependencies {
     implementation project(':my-spring-core')
     implementation project(':my-spring-data')
+    implementation 'org.apache.poi:poi:5.2.5'
+    implementation 'org.apache.poi:poi-ooxml:5.2.5'
 }
