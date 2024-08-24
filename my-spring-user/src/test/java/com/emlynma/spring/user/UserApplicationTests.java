@@ -23,6 +23,12 @@ public class UserApplicationTests {
     }
 
     @Test
+    void testRedisUtils() {
+        redisUtils.set("test", "123456", 10);
+        System.out.println(redisUtils.get("test"));
+    }
+
+    @Test
     void testUserService() {
         User user = userService.findByUid(1710121088L);
         System.out.println(JsonUtils.toJson(user));
