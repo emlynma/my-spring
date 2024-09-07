@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.advice;
+package com.emlynma.spring.core.web;
 
 import lombok.NonNull;
 import org.springframework.core.MethodParameter;
@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@Order(2)
+@Order(1)
 @RestControllerAdvice
 public class MonitorAdvice implements ResponseBodyAdvice<Object> {
 

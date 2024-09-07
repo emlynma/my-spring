@@ -1,6 +1,6 @@
 package com.emlynma.spring.core.validation;
 
-import com.emlynma.spring.core.enums.CountryEnum;
+import com.emlynma.spring.core.constant.CountryEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

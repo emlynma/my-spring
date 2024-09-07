@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.advice;
+package com.emlynma.spring.core.web;
 
 import com.emlynma.spring.core.ApiResponse;
 import com.emlynma.spring.core.BaseErrorCode;

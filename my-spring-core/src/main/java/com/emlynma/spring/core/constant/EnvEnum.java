@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.enums;
+package com.emlynma.spring.core.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
