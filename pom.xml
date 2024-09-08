@@ -25,7 +25,7 @@
 
     <!--公共属性-->
     <properties>
-
+        <mybatis-plus.version>3.5.7</mybatis-plus.version>
     </properties>
 
     <!--依赖管理（非spring管理的依赖）-->
@@ -33,6 +33,11 @@
         <dependencies>
             <!--二方依赖-->
             <!--三方依赖-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
