@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+	<Properties>
+		<Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+		<Property name="LOG_LEVEL_PATTERN">%5p</Property>
+		<Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd'T'HH:mm:ss.SSS</Property>
+		<Property name="CONSOLE_LOG_PATTERN">%clr{%d{${sys:LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${sys:LOG_LEVEL_PATTERN}} %clr{%pid}{magenta} %clr{---}{faint} %clr{${sys:LOGGED_APPLICATION_NAME:-}[%15.15t]}{faint} %clr{${sys:LOG_CORRELATION_PATTERN:-}}{faint}%clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+		<Property name="FILE_LOG_PATTERN">%d{${sys:LOG_DATEFORMAT_PATTERN}} ${sys:LOG_LEVEL_PATTERN} %pid --- ${sys:LOGGED_APPLICATION_NAME:-}[%t] ${sys:LOG_CORRELATION_PATTERN:-}%-40.40c{1.} : %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+
+		<Property name="LOG_PATH">./logs</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="InfoFile" fileName="${LOG_PATH}/info.log" filePattern="${LOG_PATH}/info.log.%d{yyyyMMddHH}" append="true">
+			<PatternLayout pattern="${FILE_LOG_PATTERN}"/>
+			<Filters>
+				<ThresholdFilter level="info"/>
+			</Filters>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="1"/>
+		</RollingFile>
+		<RollingFile name="ErrorFile" fileName="${LOG_PATH}/error.log" filePattern="${LOG_PATH}/error.log.%d{yyyyMMddHH}" append="true">
+			<PatternLayout pattern="${FILE_LOG_PATTERN}"/>
+			<Filters>
+				<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+			</Filters>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="1"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.apache.catalina.startup.DigesterFactory" level="error" />
+		<Logger name="org.apache.catalina.util.LifecycleBase" level="error" />
+		<Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn" />
+		<Logger name="org.apache.sshd.common.util.SecurityUtils" level="warn"/>
+		<Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn" />
+		<Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error" />
+		<Logger name="org.hibernate.validator.internal.util.Version" level="warn" />
+		<Logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
+		<Root level="info">
+			<AppenderRef ref="InfoFile" />
+			<AppenderRef ref="ErrorFile" />
+		</Root>
+	</Loggers>
+</Configuration>
