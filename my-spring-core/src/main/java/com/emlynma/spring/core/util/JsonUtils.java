@@ -1,6 +1,7 @@
 package com.emlynma.spring.core.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
@@ -26,6 +27,14 @@ public abstract class JsonUtils {
     public static <T> T toObject(String json, Class<T> tClass) {
         try {
             return OBJECT_MAPPER.readValue(json, tClass);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> T toObject(String json, TypeReference<T> typeReference) {
+        try {
+            return OBJECT_MAPPER.readValue(json, typeReference);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
