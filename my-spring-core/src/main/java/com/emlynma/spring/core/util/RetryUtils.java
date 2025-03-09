@@ -1,5 +1,6 @@
 package com.emlynma.spring.core.util;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -7,7 +8,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public abstract class RetryUtils {
+@UtilityClass
+public class RetryUtils {
 
     private static final int DEFAULT_COUNT = 1;
     private static final int DEFAULT_SLEEP = 0;

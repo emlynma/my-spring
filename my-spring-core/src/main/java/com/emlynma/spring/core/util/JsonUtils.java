@@ -1,13 +1,15 @@
 package com.emlynma.spring.core.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.Map;
 
-public abstract class JsonUtils {
+@UtilityClass
+public class JsonUtils {
 
     private static final ObjectMapper OBJECT_MAPPER;
 
@@ -16,64 +18,43 @@ public abstract class JsonUtils {
         OBJECT_MAPPER.findAndRegisterModules();
     }
 
+    @SneakyThrows
     public static String toJson(Object object) {
-        try {
-            return OBJECT_MAPPER.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return OBJECT_MAPPER.writeValueAsString(object);
     }
 
+    @SneakyThrows
     public static <T> T toObject(String json, Class<T> tClass) {
-        try {
-            return OBJECT_MAPPER.readValue(json, tClass);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return OBJECT_MAPPER.readValue(json, tClass);
     }
 
+    @SneakyThrows
     public static <T> T toObject(String json, TypeReference<T> typeReference) {
-        try {
-            return OBJECT_MAPPER.readValue(json, typeReference);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return OBJECT_MAPPER.readValue(json, typeReference);
     }
 
+    @SneakyThrows
     public static <K, V> Map<K, V> toMap(String json, Class<K> kClass, Class<V> vClass) {
-        try {
-            var mapType = OBJECT_MAPPER.getTypeFactory().constructMapType(Map.class, kClass, vClass);
-            return OBJECT_MAPPER.readValue(json, mapType);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        var mapType = OBJECT_MAPPER.getTypeFactory().constructMapType(Map.class, kClass, vClass);
+        return OBJECT_MAPPER.readValue(json, mapType);
     }
 
+    @SneakyThrows
     public static <K, V> Map<K, V> toMap(Object object, Class<K> kClass, Class<V> vClass) {
-        try {
-            var mapType = OBJECT_MAPPER.getTypeFactory().constructMapType(Map.class, kClass, vClass);
-            return OBJECT_MAPPER.convertValue(object, mapType);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        var mapType = OBJECT_MAPPER.getTypeFactory().constructMapType(Map.class, kClass, vClass);
+        return OBJECT_MAPPER.convertValue(object, mapType);
     }
 
+    @SneakyThrows
     public static <E> List<E> toList(String json, Class<E> eClass) {
-        try {
-            var collectionType = OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, eClass);
-            return OBJECT_MAPPER.readValue(json, collectionType);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        var collectionType = OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, eClass);
+        return OBJECT_MAPPER.readValue(json, collectionType);
     }
 
+    @SneakyThrows
     public static <E> E[] toArray(String json, Class<E> eClass) {
-        try {
-            var arrayType = OBJECT_MAPPER.getTypeFactory().constructArrayType(eClass);
-            return OBJECT_MAPPER.readValue(json, arrayType);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        var arrayType = OBJECT_MAPPER.getTypeFactory().constructArrayType(eClass);
+        return OBJECT_MAPPER.readValue(json, arrayType);
     }
 
     public static <T> T clone(Object object, Class<T> tClass) {

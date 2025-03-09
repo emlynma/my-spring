@@ -1,5 +1,8 @@
 package com.emlynma.spring.core.util;
 
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.Signature;
@@ -10,7 +13,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class SignUtils {
+@UtilityClass
+public class SignUtils {
 
     private static final String SIGN_FIELD = "sign";
 
@@ -22,26 +26,20 @@ public abstract class SignUtils {
         return verify(buildSignString(object), sign, publicKey);
     }
 
+    @SneakyThrows
     private static String sign(String content, String privateKey) {
-        try {
-            Signature signature = Signature.getInstance("SHA256withRSA");
-            signature.initSign(KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey))));
-            signature.update(content.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(signature.sign());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Signature signature = Signature.getInstance("SHA256withRSA");
+        signature.initSign(KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey))));
+        signature.update(content.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(signature.sign());
     }
 
+    @SneakyThrows
     private static boolean verify(String content, String sign, String publicKey) {
-        try {
-            Signature signature = Signature.getInstance("SHA256withRSA");
-            signature.initVerify(KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey))));
-            signature.update(content.getBytes(StandardCharsets.UTF_8));
-            return signature.verify(Base64.getDecoder().decode(sign));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Signature signature = Signature.getInstance("SHA256withRSA");
+        signature.initVerify(KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey))));
+        signature.update(content.getBytes(StandardCharsets.UTF_8));
+        return signature.verify(Base64.getDecoder().decode(sign));
     }
 
     private static String buildSignString(Object object) {
