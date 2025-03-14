@@ -13,5 +13,6 @@ build
 !gradle/wrapper/gradle-wrapper.jar
 
 ### project
+log
 logs
 output
