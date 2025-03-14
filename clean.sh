@@ -11,6 +11,7 @@ cd "$(dirname "${0}")"
 # 清理 Maven 编译生成的 class 文件
 mvn clean
 
-# 查找并删除所有名为 logs 和 output 的目录
+# 清理其他文件
+find . -type d -name "log" -exec rm -rf {} +
 find . -type d -name "logs" -exec rm -rf {} +
 find . -type d -name "output" -exec rm -rf {} +
