@@ -3,7 +3,9 @@
 # Usage: sh build.sh
 # Author: Emlyn Ma
 
-set -e
+set -euo pipefail
+
+cd "$(dirname "${0}")"
 
 mvn clean package -e -U -DskipTests
 

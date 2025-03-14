@@ -3,46 +3,31 @@
 # Usage: control.sh {start|stop|restart|status}
 # Author: Emlyn Ma
 
-# exit when any command fails
-set -e
+set -euo pipefail
 
-work_dir=$(cd "$(dirname "${0}")" || exit 1; pwd)
-cd "${work_dir}" || exit 1
+cd "$(dirname "${0}")"
 
 app=my-spring-user
 
 app_jar=${app}.jar
 app_pid=var/${app}.pid
-app_env=$(if [ -n "${2}" ]; then echo "${2}"; else echo "dev"; fi)
-
-java_home=$(which java | head -1)
-# java_args="-Xms512M -Xmx1024M -Xmn192M -Xss512K"
+app_env="${2:-dev}"
+app_cmd=$(command -v java)
+app_arg=""
+# app_arg="-Xms512M -Xmx1024M -Xmn192M -Xss512K"
 
 function get_pid() {
-  pid=""
+  local pid=""
   # get pid from pid file
-  if [ -f ${app_pid} ]; then
-    pid=$(cat ${app_pid})
-  fi
+  [[ -f ${app_pid} ]] && pid=$(cat "${app_pid}")
   # get pid from pgrep
-  if [ -z "${pid}" ]; then
-    pid=$(pgrep -f "${app_jar}" | head -1)
-  fi
+  [[ -z "${pid}" ]] && pid=$(pgrep -f "${app_jar}" | head -n 1)
   echo "${pid}"
 }
 
 function is_running() {
-    pid=$(get_pid)
-    # check pid is empty
-    if [ -z "${pid}" ]; then
-      return 1
-    fi
-    # check process is running
-    if ps -p "${pid}" >/dev/null 2>&1; then
-      return 0
-    else
-      return 1
-    fi
+  # check pid and pgrep
+  [[ -n "$(get_pid)" ]] && ps -p "$(get_pid)" >/dev/null 2>&1
 }
 
 function start() {
@@ -52,22 +37,22 @@ function start() {
   # check app is running
   if is_running; then
     echo "${app} is already running."
-    exit 0
+    return 0
   fi
   # start app
-  nohup "${java_home}" -jar ${app_jar} --spring.profiles.active="${app_env}" >/dev/null 2>&1 &
+  echo "starting ${app} with profile: ${app_env} ..."
+  nohup "${app_cmd}" -jar "${app_jar}" "${app_arg}" --spring.profiles.active="${app_env}" >/dev/null 2>&1 &
   # save pid to pid file
   echo $! > ${app_pid}
   # check app start is success
   sleep 1
   if is_running; then
-    echo "${app} is running."
-    return 0
+    echo "${app} started successfully."
   else
     # remove pid file
     rm -f ${app_pid}
-    echo "${app} start failed, please check."
-    exit 1
+    echo "${app} failed to start. please check."
+    return 1
   fi
 }
 
@@ -75,22 +60,22 @@ function stop() {
   # check app is running
   if ! is_running; then
     echo "${app} is already stopped."
-    exit 0
+    return 0
   fi
   # stop app until app is stopped
+  echo "stopping ${app} ..."
   for ((i = 0; i < 30; i++)); do
-    if is_running; then
-      kill -15 "$(get_pid)" >/dev/null 2>&1
-      sleep 1
-    else
-      # remove pid file
-      rm -f ${app_pid}
-      echo "${app} is stopped."
+    kill -15 "$(get_pid)" >/dev/null 2>&1 && sleep 1
+    if ! is_running; then
+      rm -f "${app_pid}"
+      echo "${app} stopped successfully."
       return 0
     fi
   done
-  echo "${app} stop failed, please check."
-  exit 1
+  echo "graceful shutdown failed, forcing termination..."
+  kill -9 "$(get_pid)"
+  rm -f "${app_pid}"
+  echo "${app} has been forcefully stopped."
 }
 
 function restart() {
