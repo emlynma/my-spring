@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.emlynma.spring.data.entity.enums.SexEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -32,7 +31,6 @@ public class User {
     private LocalDateTime updateTime;
 
     @Data
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ExtraInfo {
         private Boolean isStudent;
     }

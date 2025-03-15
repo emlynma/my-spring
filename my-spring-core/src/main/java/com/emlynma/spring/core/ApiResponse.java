@@ -1,11 +1,9 @@
 package com.emlynma.spring.core;
 
 import lombok.Data;
-import lombok.ToString;
 import org.springframework.lang.NonNull;
 
 @Data
-@ToString
 public class ApiResponse<T> {
 
     private String code;

@@ -1,6 +1,8 @@
 package com.emlynma.spring.core.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -14,8 +16,11 @@ public class JsonUtils {
     private static final ObjectMapper OBJECT_MAPPER;
 
     static {
-        OBJECT_MAPPER = new ObjectMapper();
-        OBJECT_MAPPER.findAndRegisterModules();
+        OBJECT_MAPPER = new ObjectMapper()
+                .findAndRegisterModules()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        ;
     }
 
     @SneakyThrows
