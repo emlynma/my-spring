@@ -15,11 +15,8 @@ spring:
       fail-on-unknown-properties: false   # 反序列化忽略非法字段
     default-property-inclusion: non_null  # 序列化忽略 null 值
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my_spring?useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:sharding.yaml
   data:
     redis:
       host: localhost
