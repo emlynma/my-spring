@@ -18,7 +18,7 @@ rules:
   - !SHARDING
     tables:
       user:
-        actualDataNodes: my_database.user_$->{0..9}
+        actualDataNodes: my_database.user_$->{0..1}
         tableStrategy:
           standard:
             shardingColumn: uid
@@ -27,4 +27,4 @@ rules:
       user_table_algorithm:
         type: INLINE
         props:
-          algorithm-expression: user_$->{uid % 10}
+          algorithm-expression: user_$->{uid % 2}

@@ -1,6 +1,5 @@
-package com.emlynma.spring.user.context.holder;
+package com.emlynma.spring.user.handler.context;
 
-import com.emlynma.spring.user.context.LoginContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.stereotype.Component;

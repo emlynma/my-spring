@@ -7,10 +7,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum SexEnum {
+public enum UserStatusEnum {
 
-    MALE(1, "男"),
-    FEMALE(2, "女");
+    NORMAL(0, "正常"),
+    DISABLED(1, "禁用");
 
     @EnumValue
     @JsonValue

@@ -7,10 +7,23 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BaseErrorCode implements ErrorCode {
 
-    SUCCESS("0", "success"),
+    SUCCESS("00000", "success"),
 
-    PARAM_ERROR("10001", "param error"),
-    REDIS_ERROR("10002", "redis error"),
+    // client error
+    CLIENT_ERROR("C0000", "client error"),
+    PARAM_ERROR("C0001", "param error"),
+
+    // system error
+    SYSTEM_ERROR("S0000", "system error"),
+    DATABASE_ERROR("S0100", "database error"),
+    REDIS_ERROR("S0200", "redis error"),
+    MQ_ERROR("S0300", "message queue error"),
+
+    // third party error
+    THIRD_PARTY_ERROR("T0000", "third party error"),
+
+    // business error
+    BUSINESS_ERROR("B0000", "business error"),
 
     UNKNOWN("-1", "unknown");
 

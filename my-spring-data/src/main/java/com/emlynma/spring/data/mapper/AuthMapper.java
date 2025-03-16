@@ -1,8 +1,8 @@
 package com.emlynma.spring.data.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.emlynma.spring.data.entity.User;
+import com.emlynma.spring.data.entity.Auth;
 
-public interface UserMapper extends BaseMapper<User> {
+public interface AuthMapper extends BaseMapper<Auth> {
 
 }

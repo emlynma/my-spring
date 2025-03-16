@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
-@ComponentScan("com.emlynma.spring")
 @EnableAspectJAutoProxy
+@ComponentScan("com.emlynma.spring")
 public class UserApplication {
 
     public static void main(String[] args) {

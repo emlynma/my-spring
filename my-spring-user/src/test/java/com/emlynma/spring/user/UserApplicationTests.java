@@ -30,7 +30,7 @@ public class UserApplicationTests {
 
     @Test
     void testUserService() {
-        User user = userRepository.selectByUid(1710121088L);
+        User user = userRepository.findByUid(1710121088L);
         System.out.println(JsonUtils.toJson(user));
     }
 

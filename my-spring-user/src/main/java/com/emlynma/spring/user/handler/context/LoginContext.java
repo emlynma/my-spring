@@ -1,4 +1,4 @@
-package com.emlynma.spring.user.context;
+package com.emlynma.spring.user.handler.context;
 
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
