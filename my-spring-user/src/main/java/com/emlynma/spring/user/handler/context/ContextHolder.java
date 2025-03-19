@@ -10,8 +10,14 @@ public class ContextHolder {
 
     private final ObjectFactory<LoginContext> loginContextFactory;
 
+    private final ObjectFactory<RegisterContext> registerContextFactory;
+
     public LoginContext getLoginContext() {
         return loginContextFactory.getObject();
+    }
+
+    public RegisterContext getRegisterContext() {
+        return registerContextFactory.getObject();
     }
 
 }

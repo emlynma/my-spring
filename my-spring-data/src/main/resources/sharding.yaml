@@ -4,6 +4,9 @@ mode:
   repository:
     type: JDBC
 
+props:
+  sql-show: true
+
 # 数据源配置
 dataSources:
   my_database:
