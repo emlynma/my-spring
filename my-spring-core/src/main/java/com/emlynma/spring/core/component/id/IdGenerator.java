@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.id;
+package com.emlynma.spring.core.component.id;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;

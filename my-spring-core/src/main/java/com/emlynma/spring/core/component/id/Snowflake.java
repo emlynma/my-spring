@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.id;
+package com.emlynma.spring.core.component.id;
 
 /**
  * Snowflake 算法用来生成64位的ID，刚好可以用long整型存储，能够用于分布式系统中生产唯一的ID， 并且生成的ID有大致的顺序。

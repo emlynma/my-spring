@@ -1,6 +1,7 @@
-package com.emlynma.spring.core.util;
+package com.emlynma.spring.core.component.redis;
 
 import com.emlynma.spring.core.BaseErrorCode;
+import com.emlynma.spring.core.util.RetryUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RedisUtils {
+public class RedisClient {
 
     private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate<Object, Object> redisTemplate;

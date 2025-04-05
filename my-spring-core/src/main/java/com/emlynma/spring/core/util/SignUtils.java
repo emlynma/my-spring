@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class SignUtils {
 
+    private static final String HASH_ALGORITHM = "RSA";
+    private static final String SIGN_ALGORITHM = "SHA256withRSA";
     private static final String SIGN_FIELD = "sign";
 
     public static String sign(Object object, String privateKey) {
@@ -28,27 +30,25 @@ public class SignUtils {
 
     @SneakyThrows
     private static String sign(String content, String privateKey) {
-        Signature signature = Signature.getInstance("SHA256withRSA");
-        signature.initSign(KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey))));
+        Signature signature = Signature.getInstance(SIGN_ALGORITHM);
+        signature.initSign(KeyFactory.getInstance(HASH_ALGORITHM).generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey))));
         signature.update(content.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(signature.sign());
     }
 
     @SneakyThrows
     private static boolean verify(String content, String sign, String publicKey) {
-        Signature signature = Signature.getInstance("SHA256withRSA");
-        signature.initVerify(KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey))));
+        Signature signature = Signature.getInstance(SIGN_ALGORITHM);
+        signature.initVerify(KeyFactory.getInstance(HASH_ALGORITHM).generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey))));
         signature.update(content.getBytes(StandardCharsets.UTF_8));
         return signature.verify(Base64.getDecoder().decode(sign));
     }
 
     private static String buildSignString(Object object) {
-        if (Objects.isNull(object))
-            return "";
         if (isPrimitiveType(object)) {
             return String.valueOf(object);
         }
-        Map<String, Object> fieldMap = JsonUtils.toMap(JsonUtils.toJson(object), String.class, Object.class);
+        Map<String, Object> fieldMap = JsonUtils.toMap(object);
         return fieldMap.entrySet().stream()
                 .filter(entry -> Objects.nonNull(entry.getValue()))
                 .filter(entry -> isPrimitiveType(entry.getValue()))

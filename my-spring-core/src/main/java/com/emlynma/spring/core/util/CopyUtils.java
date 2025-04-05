@@ -9,8 +9,8 @@ import java.lang.reflect.Field;
 public class CopyUtils {
 
     @SneakyThrows
-    public static void copyNonNullProperties(Object source, Object target, Class<?> clazz) {
-        if (!clazz.isInstance(source) || !clazz.isInstance(target)) {
+    public static void copyNonNullProperties(Object source, Object target, Class<?> type) {
+        if (!type.isInstance(source) || !type.isInstance(target)) {
             throw new ClassCastException("class not match");
         }
         Field[] fields = source.getClass().getDeclaredFields();
@@ -24,17 +24,17 @@ public class CopyUtils {
     }
 
     @SneakyThrows
-    public static <T> T copyShallowly(T source, Class<T> tClass) {
-        T copy = tClass.getDeclaredConstructor().newInstance();
-        for (Field field : tClass.getDeclaredFields()) {
+    public static <T> T copyShallowly(T source, Class<T> type) {
+        T copy = type.getDeclaredConstructor().newInstance();
+        for (Field field : type.getDeclaredFields()) {
             field.setAccessible(true);
             field.set(copy, field.get(source));
         }
         return copy;
     }
 
-    public static <T> T copyDeeply(T source, Class<T> tClass) {
-        return JsonUtils.clone(source, tClass);
+    public static <T> T copyDeeply(T source, Class<T> type) {
+        return JsonUtils.toObject(JsonUtils.toJson(source), type);
     }
 
 }

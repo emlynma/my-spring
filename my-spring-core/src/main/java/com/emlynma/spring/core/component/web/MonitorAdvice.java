@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.web;
+package com.emlynma.spring.core.component.web;
 
 import lombok.NonNull;
 import org.springframework.core.MethodParameter;

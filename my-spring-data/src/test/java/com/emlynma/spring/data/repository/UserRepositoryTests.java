@@ -1,6 +1,6 @@
 package com.emlynma.spring.data.repository;
 
-import com.emlynma.spring.core.id.IdGenerator;
+import com.emlynma.spring.core.component.id.IdGenerator;
 import com.emlynma.spring.core.util.JsonUtils;
 import com.emlynma.spring.data.entity.User;
 import com.emlynma.spring.data.entity.enums.UserStatusEnum;

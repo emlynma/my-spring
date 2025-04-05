@@ -1,7 +1,7 @@
 package com.emlynma.spring.user;
 
 import com.emlynma.spring.core.util.JsonUtils;
-import com.emlynma.spring.core.util.RedisUtils;
+import com.emlynma.spring.core.component.redis.RedisClient;
 import com.emlynma.spring.data.entity.User;
 import com.emlynma.spring.data.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ public class UserApplicationTests {
 
 
     @Autowired
-    private RedisUtils redisUtils;
+    private RedisClient redisClient;
 
     @Autowired
     private UserRepository userRepository;
@@ -24,8 +24,8 @@ public class UserApplicationTests {
 
     @Test
     void testRedisUtils() {
-        redisUtils.set("test", "123456", 10);
-        System.out.println(redisUtils.get("test"));
+        redisClient.set("test", "123456", 10);
+        System.out.println(redisClient.get("test"));
     }
 
     @Test

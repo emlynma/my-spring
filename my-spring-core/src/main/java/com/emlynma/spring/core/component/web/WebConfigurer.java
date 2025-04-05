@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.web;
+package com.emlynma.spring.core.component.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;

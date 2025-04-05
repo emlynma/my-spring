@@ -43,7 +43,7 @@ function start() {
   echo "starting ${app} with profile: ${app_env} ..."
   nohup "${app_cmd}" -jar "${app_jar}" "${app_arg}" --spring.profiles.active="${app_env}" >/dev/null 2>&1 &
   # save pid to pid file
-  echo $! > ${app_pid}
+  echo $! >${app_pid}
   # check app start is success
   sleep 1
   if is_running; then

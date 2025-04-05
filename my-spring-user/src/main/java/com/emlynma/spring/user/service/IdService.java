@@ -1,6 +1,6 @@
 package com.emlynma.spring.user.service;
 
-import com.emlynma.spring.core.id.IdGenerator;
+import com.emlynma.spring.core.component.id.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

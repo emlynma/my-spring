@@ -1,36 +1,23 @@
 package com.emlynma.spring.core.util;
 
+import com.emlynma.spring.core.component.ApplicationContextHolder;
 import com.emlynma.spring.core.constant.EnvEnum;
-import org.springframework.beans.BeansException;
+import lombok.experimental.UtilityClass;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 
-@Component
-public class SpringUtils implements ApplicationContextAware {
-
-    private static ApplicationContext applicationContext;
-
-    @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
-        SpringUtils.applicationContext = applicationContext;
-    }
-
-    public static ApplicationContext getContext() {
-        return applicationContext;
-    }
+@UtilityClass
+public class SpringUtils {
 
     public static <T> T getBean(Class<T> type) {
-        return applicationContext.getBean(type);
+        return getApplicationContext().getBean(type);
     }
 
     public static <T> T getBean(String name, Class<T> type) {
-        return applicationContext.getBean(name, type);
+        return getApplicationContext().getBean(name, type);
     }
 
     public static String getEnv() {
-        return applicationContext.getEnvironment().getActiveProfiles()[0];
+        return getApplicationContext().getEnvironment().getActiveProfiles()[0];
     }
 
     public static boolean isDevEnv() {
@@ -43,6 +30,10 @@ public class SpringUtils implements ApplicationContextAware {
 
     public static boolean isProdEnv() {
         return EnvEnum.PROD.getCode().equals(getEnv());
+    }
+
+    private static ApplicationContext getApplicationContext() {
+        return ApplicationContextHolder.getApplicationContext();
     }
 
 }

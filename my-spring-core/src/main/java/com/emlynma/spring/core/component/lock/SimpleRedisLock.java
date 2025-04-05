@@ -1,5 +1,6 @@
-package com.emlynma.spring.core.util;
+package com.emlynma.spring.core.component.lock;
 
+import com.emlynma.spring.core.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
@@ -10,13 +11,15 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
-
+/**
+ * 简单 Redis 分布式锁
+ */
 @Slf4j
-public class RedisLock implements Lock {
+public class SimpleRedisLock implements Lock {
 
     private static final ThreadLocal<String> LOCAL_LOCK_TOKEN = new ThreadLocal<>();
-    private static final long SLEEP_TIME = 20;
-    private static final long DEFAULT_EXPIRE_TIME = 1000 * 60;
+    private static final long SLEEP_TIME = 20; // 20ms
+    private static final long DEFAULT_EXPIRE_TIME = 1000 * 10; // 10s
     private static final String LOCK_PREFIX = "lock:";
     private static final String LOCK_LUA_SCRIPT = "if redis.call('set', KEYS[1], ARGV[1], 'nx', 'px', ARGV[2]) then return 1 else return 0 end";
     private static final String UNLOCK_LUA_SCRIPT = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
@@ -26,13 +29,13 @@ public class RedisLock implements Lock {
     private final String lockKey;
     private final long expireTime;
 
-    public RedisLock(String lockKey) {
+    public SimpleRedisLock(String lockKey) {
         this.lockKey = lockKey;
         this.expireTime = DEFAULT_EXPIRE_TIME;
         this.redisTemplate = SpringUtils.getBean(StringRedisTemplate.class);
     }
 
-    public RedisLock(String lockKey, long expireTime, TimeUnit unit) {
+    public SimpleRedisLock(String lockKey, long expireTime, TimeUnit unit) {
         this.lockKey = lockKey;
         this.expireTime = unit.toMillis(expireTime);
         this.redisTemplate = SpringUtils.getBean(StringRedisTemplate.class);
@@ -42,13 +45,10 @@ public class RedisLock implements Lock {
     public boolean tryLock() {
         String redisKey = LOCK_PREFIX + lockKey;
         String redisValue = UUID.randomUUID().toString();
-        Boolean result;
-        try {
-            RedisScript<Boolean> lockScript = RedisScript.of(LOCK_LUA_SCRIPT, Boolean.class);
-            result = redisTemplate.execute(lockScript, List.of(redisKey), redisValue, String.valueOf(expireTime));
-        } catch (Exception e) {
-            throw new RuntimeException("tryLock error");
-        }
+        Boolean result = redisTemplate.execute(
+                RedisScript.of(LOCK_LUA_SCRIPT, Boolean.class),
+                List.of(redisKey), redisValue, String.valueOf(expireTime)
+        );
         if (Boolean.TRUE.equals(result)) {
             LOCAL_LOCK_TOKEN.set(redisValue);
             return true;
@@ -58,18 +58,17 @@ public class RedisLock implements Lock {
     }
 
     @Override
-    public boolean tryLock(long time, TimeUnit unit) {
+    public boolean tryLock(long time, @NonNull TimeUnit unit) throws InterruptedException {
+        if (Thread.interrupted()) {
+            throw new InterruptedException();
+        }
         long remainTime = unit.toMillis(time);
         long endTime = System.currentTimeMillis() + remainTime;
         while (remainTime > 0) {
             if (tryLock()) {
                 return true;
             }
-            try {
-                Thread.sleep(Math.min(remainTime, SLEEP_TIME));
-            } catch (InterruptedException e) {
-                throw new RuntimeException("tryLock error");
-            }
+            Thread.sleep(Math.min(remainTime, SLEEP_TIME));
             remainTime = endTime - System.currentTimeMillis();
         }
         return false;
@@ -82,10 +81,26 @@ public class RedisLock implements Lock {
                 return;
             }
             try {
+                // noinspection BusyWait
                 Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
-                throw new RuntimeException("lock error");
+                // 忽略中断，但保留中断状态
+                Thread.currentThread().interrupt();
             }
+        }
+    }
+
+    @Override
+    public void lockInterruptibly() throws InterruptedException {
+        if (Thread.interrupted()) {
+            throw new InterruptedException();
+        }
+        while (true) {
+            if (tryLock()) {
+                return;
+            }
+            // noinspection BusyWait
+            Thread.sleep(SLEEP_TIME);
         }
     }
 
@@ -93,23 +108,15 @@ public class RedisLock implements Lock {
     public void unlock() {
         String redisKey = LOCK_PREFIX + lockKey;
         String redisValue = LOCAL_LOCK_TOKEN.get();
-        Boolean result;
-        try {
+        if (redisValue != null) {
             RedisScript<Boolean> unlockScript = RedisScript.of(UNLOCK_LUA_SCRIPT, Boolean.class);
-            result = redisTemplate.execute(unlockScript, List.of(redisKey), redisValue);
-        } catch (Exception e) {
-            throw new RuntimeException("unlock error");
-        } finally {
+            Boolean result = redisTemplate.execute(unlockScript, List.of(redisKey), redisValue);
+            if (Boolean.FALSE.equals(result)) {
+                // 失败重试一次
+                redisTemplate.execute(unlockScript, List.of(redisKey), redisValue);
+            }
             LOCAL_LOCK_TOKEN.remove();
         }
-        if (Boolean.FALSE.equals(result)) {
-            log.warn("unlock failed");
-        }
-    }
-
-    @Override
-    public void lockInterruptibly() {
-        throw new UnsupportedOperationException();
     }
 
     @Override @NonNull
