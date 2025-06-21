@@ -17,17 +17,17 @@ dataSources:
     password: 123456
 
 # 分片规则配置
-rules:
-  - !SHARDING
-    tables:
-      user:
-        actualDataNodes: my_database.user_$->{0..1}
-        tableStrategy:
-          standard:
-            shardingColumn: uid
-            shardingAlgorithmName: user_table_algorithm
-    shardingAlgorithms:
-      user_table_algorithm:
-        type: INLINE
-        props:
-          algorithm-expression: user_$->{uid % 2}
+#rules:
+#  - !SHARDING
+#    tables:
+#      user:
+#        actualDataNodes: my_database.user_$->{0..1}
+#        tableStrategy:
+#          standard:
+#            shardingColumn: uid
+#            shardingAlgorithmName: user_table_algorithm
+#    shardingAlgorithms:
+#      user_table_algorithm:
+#        type: INLINE
+#        props:
+#          algorithm-expression: user_$->{uid % 2}

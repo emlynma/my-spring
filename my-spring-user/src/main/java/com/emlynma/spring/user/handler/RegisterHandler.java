@@ -41,9 +41,7 @@ public class RegisterHandler {
     }
 
     private void checkRequest(RegisterRequest request) {
-        if (ObjectUtils.isEmpty(request.getUname())
-                && ObjectUtils.isEmpty(request.getPhone())
-                && ObjectUtils.isEmpty(request.getEmail())) {
+        if (ObjectUtils.isEmpty(request.getEmail())) {
             throw new BaseException(BaseErrorCode.PARAM_ERROR, "no valid identifier");
         }
         if (StringUtils.hasText(request.getPassword())) {
@@ -54,18 +52,6 @@ public class RegisterHandler {
     }
 
     private void checkAvailability(RegisterRequest request) {
-        if (StringUtils.hasText(request.getUname())) {
-            User user = userRepository.findByUname(request.getUname());
-            if (user != null) {
-                throw new BaseException(BaseErrorCode.PARAM_ERROR, "uname already exist");
-            }
-        }
-        if (StringUtils.hasText(request.getPhone())) {
-            User user = userRepository.findByPhone(request.getPhone());
-            if (user != null) {
-                throw new BaseException(BaseErrorCode.PARAM_ERROR, "phone already exist");
-            }
-        }
         if (StringUtils.hasText(request.getEmail())) {
             User user = userRepository.findByEmail(request.getEmail());
             if (user != null) {
@@ -77,8 +63,6 @@ public class RegisterHandler {
     private void createUser(RegisterRequest request) {
         User user = new User();
         user.setUid(idService.generateUid());
-        user.setUname(request.getUname());
-        user.setPhone(request.getPhone());
         user.setEmail(request.getEmail());
         user.setStatus(UserStatusEnum.NORMAL);
         userRepository.save(user);

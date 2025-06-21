@@ -24,7 +24,7 @@ public class UserRepositoryTests {
         User user = new User();
         user.setUid(idGenerator.generateId());
         user.setUname("emlynma");
-        user.setPhone("186123");
+        user.setEmail("emlyn.ma@gmail.com");
         userRepository.insert(user);
         user = userRepository.findByUid(user.getUid());
         System.out.println(JsonUtils.toJson(user));
@@ -33,6 +33,7 @@ public class UserRepositoryTests {
     @Test
     void testSave() {
         User user = userRepository.findByUid(292077809260695552L);
+
         User update = new User();
         update.setStatus(UserStatusEnum.DISABLED);
         update.setEmail("aaaaaaaa");

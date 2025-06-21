@@ -43,7 +43,6 @@ public class UserRepository {
                 .eq(Objects.nonNull(condition.getUid()), User::getUid, condition.getUid())
                 .eq(Objects.nonNull(condition.getUname()), User::getUname, condition.getUname())
                 .eq(Objects.nonNull(condition.getEmail()), User::getEmail, condition.getEmail())
-                .eq(Objects.nonNull(condition.getPhone()), User::getPhone, condition.getPhone())
                 ;
     }
 
@@ -110,12 +109,6 @@ public class UserRepository {
     public User findByUname(String uname) {
         User condition = new User();
         condition.setUname(uname);
-        return userMapper.selectOne(buildQueryWrapper(condition));
-    }
-
-    public User findByPhone(String phone) {
-        User condition = new User();
-        condition.setPhone(phone);
         return userMapper.selectOne(buildQueryWrapper(condition));
     }
 

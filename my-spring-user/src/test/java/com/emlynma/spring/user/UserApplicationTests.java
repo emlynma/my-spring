@@ -26,6 +26,14 @@ public class UserApplicationTests {
     void testRedisUtils() {
         redisClient.set("test", "123456", 10);
         System.out.println(redisClient.get("test"));
+
+        while (true) {
+            try {
+                redisClient.set("test", "123456", 10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Test

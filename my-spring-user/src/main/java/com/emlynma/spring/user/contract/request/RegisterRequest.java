@@ -6,8 +6,7 @@ import lombok.Data;
 @Data
 public class RegisterRequest {
 
-    private String uname;
-    private String phone;
+    @NotBlank
     private String email;
 
     @NotBlank

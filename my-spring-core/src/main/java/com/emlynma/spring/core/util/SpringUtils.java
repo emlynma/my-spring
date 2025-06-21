@@ -1,6 +1,6 @@
 package com.emlynma.spring.core.util;
 
-import com.emlynma.spring.core.component.ApplicationContextHolder;
+import com.emlynma.spring.core.component.spring.ApplicationContextHolder;
 import com.emlynma.spring.core.constant.EnvEnum;
 import lombok.experimental.UtilityClass;
 import org.springframework.context.ApplicationContext;

@@ -1,9 +1,7 @@
 package com.emlynma.spring.user.controller;
 
 import com.emlynma.spring.core.ApiResponse;
-import com.emlynma.spring.user.contract.request.LoginRequest;
 import com.emlynma.spring.user.contract.request.RegisterRequest;
-import com.emlynma.spring.user.contract.response.LoginResponse;
 import com.emlynma.spring.user.contract.response.RegisterResponse;
 import com.emlynma.spring.user.handler.RegisterHandler;
 import lombok.RequiredArgsConstructor;
