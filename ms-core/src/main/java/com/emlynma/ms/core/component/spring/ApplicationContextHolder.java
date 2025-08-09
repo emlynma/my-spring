@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.component.spring;
+package com.emlynma.ms.core.component.spring;
 
 import lombok.Getter;
 import org.springframework.beans.BeansException;

@@ -12,6 +12,8 @@ spring:
   profiles:
     active: dev
   jackson:
+    date-format: yyyy-MM-dd’T‘HH:mm:ss
+    default-property-inclusion: non_null
     serialization:
       fail-on-empty-beans: false
     deserialization:

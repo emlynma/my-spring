@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.component.web.advice;
+package com.emlynma.ms.core.component.web.advice;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

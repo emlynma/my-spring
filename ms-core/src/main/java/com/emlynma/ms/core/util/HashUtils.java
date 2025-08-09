@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.util;
+package com.emlynma.ms.core.util;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;

@@ -1,7 +1,7 @@
-package com.emlynma.spring.core.util;
+package com.emlynma.ms.core.util;
 
-import com.emlynma.spring.core.component.spring.ApplicationContextHolder;
-import com.emlynma.spring.core.enums.EnvEnum;
+import com.emlynma.ms.core.component.spring.ApplicationContextHolder;
+import com.emlynma.ms.core.enums.EnvEnum;
 import lombok.experimental.UtilityClass;
 import org.springframework.context.ApplicationContext;
 

@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.base;
+package com.emlynma.ms.core.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.emlynma.spring.core.util;
+package com.emlynma.ms.core.util;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -48,7 +48,7 @@ public class SignUtils {
         if (isPrimitiveType(object)) {
             return String.valueOf(object);
         }
-        Map<String, Object> fieldMap = JsonUtils.toMap(object);
+        Map<String, Object> fieldMap = JsonUtils.toMap(JsonUtils.toJson(object), Object.class);
         return fieldMap.entrySet().stream()
                 .filter(entry -> Objects.nonNull(entry.getValue()))
                 .filter(entry -> isPrimitiveType(entry.getValue()))

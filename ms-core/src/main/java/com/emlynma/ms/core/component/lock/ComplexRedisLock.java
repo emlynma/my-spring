@@ -1,6 +1,6 @@
-package com.emlynma.spring.core.component.lock;
+package com.emlynma.ms.core.component.lock;
 
-import com.emlynma.spring.core.util.SpringUtils;
+import com.emlynma.ms.core.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;

@@ -1,9 +1,9 @@
-package com.emlynma.spring.core.component.web.advice;
+package com.emlynma.ms.core.component.web.advice;
 
-import com.emlynma.spring.core.base.ApiResponse;
-import com.emlynma.spring.core.base.BaseErrorCode;
-import com.emlynma.spring.core.base.BaseException;
-import com.emlynma.spring.core.base.ErrorCode;
+import com.emlynma.ms.core.base.ApiResponse;
+import com.emlynma.ms.core.base.BaseErrorCode;
+import com.emlynma.ms.core.base.BaseException;
+import com.emlynma.ms.core.base.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
