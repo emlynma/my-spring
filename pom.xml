@@ -21,6 +21,12 @@
         <module>ms-user</module>
     </modules>
 
+    <!--公共属性-->
+    <properties>
+        <shardingsphere.version>5.5.2</shardingsphere.version>
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <!--二方依赖-->
