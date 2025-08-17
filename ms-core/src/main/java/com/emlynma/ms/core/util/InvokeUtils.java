@@ -9,20 +9,24 @@ import java.util.concurrent.Callable;
 @UtilityClass
 public class InvokeUtils {
 
-    public static <T> T callQuietly(Callable<T> callable) {
-        try {
-            return callable.call();
-        } catch (Exception e) {
-            log.error("invoke call error, default return null.", e);
-            return null;
-        }
-    }
-
     public static void runQuietly(Runnable runnable) {
         try {
             runnable.run();
         } catch (Exception e) {
             log.error("invoke run error", e);
+        }
+    }
+
+    public static <T> T callQuietly(Callable<T> callable) {
+        return callQuietly(callable, null);
+    }
+
+    public static <T> T callQuietly(Callable<T> callable, T defaultValue) {
+        try {
+            return callable.call();
+        } catch (Exception e) {
+            log.error("invoke call error, default value: {}", defaultValue, e);
+            return defaultValue;
         }
     }
 

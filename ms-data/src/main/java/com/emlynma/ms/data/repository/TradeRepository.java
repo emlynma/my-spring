@@ -3,7 +3,7 @@ package com.emlynma.ms.data.repository;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.emlynma.ms.core.base.BaseErrorCode;
-import com.emlynma.ms.core.base.BaseException;
+import com.emlynma.ms.core.exception.SystemException;
 import com.emlynma.ms.core.util.CopyUtils;
 import com.emlynma.ms.data.domain.entity.TradeDO;
 import com.emlynma.ms.data.mapper.TradeMapper;
@@ -43,21 +43,21 @@ public class TradeRepository {
     public void insert(TradeDO entity) {
         int effect = tradeMapper.insert(entity);
         if (effect != 1) {
-            throw new BaseException(BaseErrorCode.DATABASE_ERROR, "insert failed, entity: " + entity);
+            throw new SystemException(BaseErrorCode.DB_INSERT_ERROR);
         }
     }
 
     public void delete(TradeDO entity) {
         int effect = tradeMapper.delete(buildQueryWrapper(entity));
         if (effect != 1) {
-            throw new BaseException(BaseErrorCode.DATABASE_ERROR, "delete failed, entity: " + entity);
+            throw new SystemException(BaseErrorCode.DB_DELETE_ERROR);
         }
     }
 
     public void update(TradeDO entity, TradeDO update) {
         int effect = tradeMapper.update(update, buildUpdateWrapper(entity));
         if (effect != 1) {
-            throw new BaseException(BaseErrorCode.DATABASE_ERROR, "update failed, entity: " + entity + ", update: " + update);
+            throw new SystemException(BaseErrorCode.DB_UPDATE_ERROR);
         }
         if (entity != update) {
             CopyUtils.copyNonNullProperties(update, entity, TradeDO.class);

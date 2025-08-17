@@ -1,3 +1,5 @@
+drop table trade;
+
 create table trade
 (
     id              bigint unsigned auto_increment comment '内部自增主键',
@@ -21,10 +23,24 @@ create table trade
     update_time     datetime    default current_timestamp  not null on update current_timestamp comment '更新时间',
     finish_time     datetime                               null     comment '完成时间',
     expire_time     datetime                               null     comment '过期时间',
+    lock_id         varchar(64)                            null     comment 'DB锁',
+    version         int unsigned default 0                 not null comment '乐观锁版本号',
     primary key (id),
     unique key uk_trade_id (trade_id),
     unique key uk_out_trade_id (merchant_id, out_trade_id)
 ) comment='交易表';
+
+## 加锁
+update trade
+set lock_id = concat('${uuid}', '_', unix_timestamp(now(3)) * 1000 + '${expire}')
+where trade_id = '${key}'
+and (
+    (lock_id is null) or
+    (lock_id = '') or
+    (substring_index(lock_id, '_', 1) = '${uuid}') or
+    (unix_timestamp(now(3)) * 1000 > (substring_index(lock_id, '_', -1)))
+)
+;
 
 
 create table user

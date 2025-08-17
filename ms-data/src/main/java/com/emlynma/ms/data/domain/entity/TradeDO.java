@@ -52,6 +52,9 @@ public class TradeDO {
     private Date finishTime;
     private Date expireTime;
 
+    private String lockId;
+    private Integer version;
+
     public void setError(ErrorCode errorCode) {
         setErrorCode(errorCode.getCode());
         setErrorDesc(errorCode.getDesc());
