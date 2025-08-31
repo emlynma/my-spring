@@ -1,0 +1,28 @@
+server:
+  port: 8500
+  shutdown: graceful
+  servlet:
+    context-path: /trade
+spring:
+  profiles:
+    active: dev
+  config:
+    import: classpath:application-core.yaml, classpath:application-date.yaml
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod

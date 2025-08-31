@@ -18,7 +18,7 @@
     <modules>
         <module>ms-core</module>
         <module>ms-data</module>
-        <module>ms-user</module>
+        <module>ms-trade</module>
     </modules>
 
     <!--公共属性-->

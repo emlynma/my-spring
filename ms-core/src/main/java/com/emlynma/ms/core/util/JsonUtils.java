@@ -9,6 +9,8 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +25,7 @@ public class JsonUtils {
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"))
+                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
         ;
     }
 
@@ -78,6 +79,11 @@ public class JsonUtils {
     @SneakyThrows
     public static String toPrettyJson(Object object) {
         return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(JsonUtils.toJson(new Date()));
+        System.out.println(JsonUtils.toJson(LocalDateTime.now()));
     }
 
 }

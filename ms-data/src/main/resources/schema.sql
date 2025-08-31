@@ -32,12 +32,12 @@ create table trade
 
 ## 加锁
 update trade
-set lock_id = concat('${uuid}', '_', unix_timestamp(now(3)) * 1000 + '${expire}')
+set lock_id = concat('${value}', '_', unix_timestamp(now(3)) * 1000 + '${expire}')
 where trade_id = '${key}'
 and (
     (lock_id is null) or
     (lock_id = '') or
-    (substring_index(lock_id, '_', 1) = '${uuid}') or
+    (substring_index(lock_id, '_', 1) = '${value}') or
     (unix_timestamp(now(3)) * 1000 > (substring_index(lock_id, '_', -1)))
 )
 ;
