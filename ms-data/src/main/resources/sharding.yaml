@@ -9,25 +9,26 @@ props:
 
 # 数据源配置
 dataSources:
-  my_database:
+  my_spring:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://43.143.130.253:3306/my_database?useUnicode=true&characterEncoding=utf8&useSSL=false
+    jdbcUrl: jdbc:mysql://43.143.130.253:3306/my_spring?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: emlyn
     password: 123456
 
 # 分片规则配置
-#rules:
-#  - !SHARDING
-#    tables:
-#      user:
-#        actualDataNodes: my_database.user_$->{0..1}
-#        tableStrategy:
-#          standard:
-#            shardingColumn: uid
-#            shardingAlgorithmName: user_table_algorithm
-#    shardingAlgorithms:
-#      user_table_algorithm:
-#        type: INLINE
-#        props:
-#          algorithm-expression: user_$->{uid % 2}
+rules:
+  - !SHARDING
+    tables:
+      trade:
+        actualDataNodes: my_spring.trade_$->{0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: trade_id
+            shardingAlgorithmName: trade_sharding
+    shardingAlgorithms:
+      trade_sharding:
+        type: CLASS_BASED
+        props:
+          strategy: STANDARD
+          algorithmClassName: com.emlynma.ms.data.common.sharding.StringSuffixModShardingAlgorithm

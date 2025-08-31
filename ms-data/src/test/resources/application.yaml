@@ -8,17 +8,9 @@ spring:
       fail-on-unknown-properties: false   # 反序列化忽略非法字段
     default-property-inclusion: non_null  # 序列化忽略 null 值
   datasource:
-    url: jdbc:mysql://43.143.130.253:3306/my_spring?useUnicode=true&characterEncoding=utf8&useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: emlyn
-    password: 123456
-#    hikari:
-#      username: emlyn
-#      password: 123456
-#      jdbc-url: jdbc:mysql://43.143.130.253:3306/my_spring?useUnicode=true&characterEncoding=utf8&useSSL=false
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
-#    url: jdbc:shardingsphere:classpath:sharding.yaml
+    url: jdbc:shardingsphere:classpath:sharding.yaml
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+
 mybatis-plus:
   global-config:
     db-config:

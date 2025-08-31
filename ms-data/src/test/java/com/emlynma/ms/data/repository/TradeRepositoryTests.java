@@ -18,7 +18,7 @@ public class TradeRepositoryTests {
     @Test
     public void test() {
         TradeDO condition = new TradeDO();
-        condition.setTradeId("123");
+        condition.setTradeId("123000");
         TradeDO tradeDO = userRepository.selectOne(condition);
         System.out.println(tradeDO);
     }
