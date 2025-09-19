@@ -25,7 +25,6 @@ public class JsonUtils {
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
         ;
     }
 

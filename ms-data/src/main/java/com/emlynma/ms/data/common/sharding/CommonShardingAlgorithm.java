@@ -10,23 +10,27 @@ import java.util.List;
 import java.util.Properties;
 
 @Slf4j
-public class StringSuffixModShardingAlgorithm implements StandardShardingAlgorithm<Comparable<?>> {
+public class CommonShardingAlgorithm implements StandardShardingAlgorithm<Comparable<?>> {
+
+    private int tableCount;
 
     @Override
     public void init(final Properties props) {
         if (props == null) return;
+        tableCount = Integer.parseInt(props.getProperty("tableCount", "2"));
     }
 
     @Override
     public String doSharding(Collection<String> collection, PreciseShardingValue<Comparable<?>> shardingValue) {
-        // 分表数量
-        int count = collection.size();
-        // 截取长度
-        int length = length(count);
+        // 根据分表数量计算需要截取几位
+        int digits = calculateDigits(tableCount);
         // 分表值
         String value = String.valueOf(shardingValue.getValue());
-        String tail = value.substring(Math.max(0, value.length() - length));
-        int index = Integer.parseInt(tail) % count;
+        // 截取后缀
+        String tail = value.substring(Math.max(0, value.length() - digits));
+        // 后缀取模
+        int index = Integer.parseInt(tail) % tableCount;
+        // 实际表名
         return shardingValue.getLogicTableName() + "_" + index;
     }
 
@@ -35,12 +39,12 @@ public class StringSuffixModShardingAlgorithm implements StandardShardingAlgorit
         return List.of();
     }
 
-    private static int length(int count) {
-        int length = 1;
+    private static int calculateDigits(int count) {
+        int digits = 1;
         while ((count = (count / 10)) > 0) {
-            length ++;
+            digits ++;
         }
-        return length;
+        return digits;
     }
 
 }

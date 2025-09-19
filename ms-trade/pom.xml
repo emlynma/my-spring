@@ -13,7 +13,11 @@
     <artifactId>ms-trade</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.emlynma</groupId>
+            <artifactId>ms-data</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -15,6 +15,8 @@ public class TradeRepositoryTests {
     @Autowired
     private IdGenerator idGenerator;
 
+
+
     @Test
     public void test() {
         TradeDO condition = new TradeDO();

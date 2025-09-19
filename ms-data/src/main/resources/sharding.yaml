@@ -25,10 +25,11 @@ rules:
         tableStrategy:
           standard:
             shardingColumn: trade_id
-            shardingAlgorithmName: trade_sharding
+            shardingAlgorithmName: common_sharding
     shardingAlgorithms:
-      trade_sharding:
+      common_sharding:
         type: CLASS_BASED
         props:
           strategy: STANDARD
-          algorithmClassName: com.emlynma.ms.data.common.sharding.StringSuffixModShardingAlgorithm
+          algorithmClassName: com.emlynma.ms.data.common.sharding.CommonShardingAlgorithm
+          tableCount: 2
