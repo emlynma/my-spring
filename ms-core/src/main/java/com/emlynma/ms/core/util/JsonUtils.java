@@ -8,9 +8,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -78,11 +75,6 @@ public class JsonUtils {
     @SneakyThrows
     public static String toPrettyJson(Object object) {
         return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(object);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(JsonUtils.toJson(new Date()));
-        System.out.println(JsonUtils.toJson(LocalDateTime.now()));
     }
 
 }
