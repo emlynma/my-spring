@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Data
 @TableName(value = "trade", autoResultMap = true)
-public class TradeDO {
+public class Trade {
 
     @TableId(type = IdType.AUTO)
     private Long id;

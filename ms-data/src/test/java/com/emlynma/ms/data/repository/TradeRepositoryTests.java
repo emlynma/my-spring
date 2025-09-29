@@ -1,7 +1,7 @@
 package com.emlynma.ms.data.repository;
 
 import com.emlynma.ms.core.component.id.IdGenerator;
-import com.emlynma.ms.data.domain.entity.TradeDO;
+import com.emlynma.ms.data.domain.entity.Trade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,10 +19,10 @@ public class TradeRepositoryTests {
 
     @Test
     public void test() {
-        TradeDO condition = new TradeDO();
+        Trade condition = new Trade();
         condition.setTradeId("123000");
-        TradeDO tradeDO = userRepository.selectOne(condition);
-        System.out.println(tradeDO);
+        Trade trade = userRepository.selectOne(condition);
+        System.out.println(trade);
     }
 
 }
