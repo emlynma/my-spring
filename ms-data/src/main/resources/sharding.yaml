@@ -12,8 +12,8 @@ dataSources:
   my_spring:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/my_spring?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: root
+    jdbcUrl: jdbc:mysql://43.143.130.253:3306/my_spring?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: emlyn
     password: 123456
 
 # 分片规则配置
@@ -23,13 +23,25 @@ rules:
       trade:
         actualDataNodes: my_spring.trade_$->{0..1}
         tableStrategy:
-          standard:
-            shardingColumn: trade_id
-            shardingAlgorithmName: common_sharding
+          complex:
+            shardingColumns: trade_id,out_trade_id
+            shardingAlgorithmName: trade_sharding
     shardingAlgorithms:
-      common_sharding:
+      trade_sharding:
         type: CLASS_BASED
         props:
-          strategy: STANDARD
-          algorithmClassName: com.emlynma.ms.data.common.sharding.CommonShardingAlgorithm
-          tableCount: 2
+          strategy: COMPLEX
+          algorithmClassName: com.emlynma.ms.data.component.sharding.TradeShardingAlgorithm
+          shardingCount: 2
+#      trade_sharding:
+#        type: COMPLEX_INLINE
+#        props:
+#          algorithm-expression: >
+#            trade_$->{
+#              if (trade_id != null) {
+#                return trade_id.takeRight(3).toInteger() % 2;
+#              }
+#              if (out_trade_id != null) {
+#                return Math.abs(out_trade_id.hashCode()).toString().takeRight(3).toInteger() % 2;
+#              }
+#            }

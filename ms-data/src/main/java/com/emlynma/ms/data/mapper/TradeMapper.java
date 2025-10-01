@@ -2,9 +2,9 @@ package com.emlynma.ms.data.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.emlynma.ms.data.domain.entity.Trade;
-import com.emlynma.ms.data.lock.LockExecutor;
-import com.emlynma.ms.data.lock.LockParams;
-import com.emlynma.ms.data.lock.LockSQL;
+import com.emlynma.ms.data.component.lock.LockExecutor;
+import com.emlynma.ms.data.component.lock.LockParams;
+import com.emlynma.ms.data.component.lock.LockSQL;
 import org.apache.ibatis.annotations.Update;
 
 public interface TradeMapper extends BaseMapper<Trade>, LockExecutor {

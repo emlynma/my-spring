@@ -26,7 +26,7 @@ public class TradeRepository {
     private final EventPublisher eventPublisher;
 
     private LambdaUpdateWrapper<Trade> buildUpdateWrapper(Trade condition) {
-        Assert.notNull(condition.getTradeId(), "sharding key(tradeId) must not be null");
+        Assert.isTrue(condition.getTradeId() != null || condition.getOutTradeId() != null, "sharding key(tradeId or outTradeId) must not be all null");
         return new LambdaUpdateWrapper<Trade>()
                 .eq(Objects.nonNull(condition.getId()), Trade::getId, condition.getId())
                 .eq(Objects.nonNull(condition.getTradeId()), Trade::getTradeId, condition.getTradeId())
@@ -34,7 +34,7 @@ public class TradeRepository {
     }
 
     private LambdaQueryWrapper<Trade> buildQueryWrapper(Trade condition) {
-        Assert.isTrue(condition.getTradeId() == null || condition.getOutTradeId() == null, "sharding key(tradeId or outTradeId) must not be null");
+        Assert.isTrue(condition.getTradeId() != null || condition.getOutTradeId() != null, "sharding key(tradeId or outTradeId) must not be all null");
         return new LambdaQueryWrapper<Trade>()
                 .eq(Objects.nonNull(condition.getId()), Trade::getId, condition.getId())
                 .eq(Objects.nonNull(condition.getTradeId()), Trade::getTradeId, condition.getTradeId())

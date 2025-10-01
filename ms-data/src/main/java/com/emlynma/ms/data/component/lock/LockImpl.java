@@ -1,4 +1,4 @@
-package com.emlynma.ms.data.lock;
+package com.emlynma.ms.data.component.lock;
 
 import com.emlynma.ms.core.base.BaseErrorCode;
 import com.emlynma.ms.core.exception.SystemException;

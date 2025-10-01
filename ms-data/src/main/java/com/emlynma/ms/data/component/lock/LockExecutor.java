@@ -1,4 +1,4 @@
-package com.emlynma.ms.data.lock;
+package com.emlynma.ms.data.component.lock;
 
 public interface LockExecutor {
 

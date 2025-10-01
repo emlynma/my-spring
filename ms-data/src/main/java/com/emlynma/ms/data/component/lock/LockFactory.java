@@ -1,4 +1,4 @@
-package com.emlynma.ms.data.lock;
+package com.emlynma.ms.data.component.lock;
 
 import com.emlynma.ms.data.mapper.TradeMapper;
 import lombok.RequiredArgsConstructor;

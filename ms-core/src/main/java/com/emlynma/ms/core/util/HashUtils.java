@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.security.MessageDigest;
+import java.util.zip.CRC32;
 
 @UtilityClass
 public class HashUtils {
@@ -32,6 +33,12 @@ public class HashUtils {
             hexString.append(String.format("%02x", b));
         }
         return hexString.toString();
+    }
+
+    public static String crc32(String content) {
+        CRC32 crc32 = new CRC32();
+        crc32.update(content.getBytes());
+        return String.valueOf(crc32.getValue());
     }
 
 }
