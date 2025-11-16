@@ -1,5 +1,3 @@
-drop table trade;
-
 create table trade
 (
     id              bigint unsigned auto_increment comment '内部自增主键',
@@ -30,45 +28,31 @@ create table trade
     unique key uk_out_trade_id (merchant_id, out_trade_id)
 ) comment='交易表';
 
-## 加锁
-update trade
-set lock_id = concat('${value}', '_', unix_timestamp(now(3)) * 1000 + '${expire}')
-where trade_id = '${key}'
-and (
-    (lock_id is null) or
-    (lock_id = '') or
-    (substring_index(lock_id, '_', 1) = '${value}') or
-    (unix_timestamp(now(3)) * 1000 > (substring_index(lock_id, '_', -1)))
-)
-;
-
-
-create table user
+create table refund
 (
-    id          bigint unsigned auto_increment,
-    uid         bigint unsigned                    not null,
-    uname       varchar(32)                        not null,
-    email       varchar(64)                        not null,
-    status      tinyint  default 0                 not null,
-    extra_info  json     default (json_object())   not null,
-    create_time datetime default CURRENT_TIMESTAMP not null,
-    update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    id                  bigint unsigned auto_increment comment '内部自增主键',
+    refund_id           varchar(32)                            not null comment '退款单号（唯一）',
+    merchant_id         varchar(32)                            not null comment '商户号',
+    out_refund_id       varchar(32)                            not null comment '商户侧退款单号（幂等键）',
+    origin_trade_id     varchar(32)                            not null comment '原始交易单号',
+    origin_out_trade_id varchar(32)                            not null comment '原始商户侧订单号',
+    uid                 bigint unsigned                        not null comment '用户ID',
+    amount              bigint unsigned                        not null comment '退款金额',
+    currency            char(3)                                not null comment '币种',
+    trade_type          tinyint unsigned                       not null comment '交易类型',
+    status              tinyint unsigned default 0             not null comment '退款状态',
+    error_code          varchar(16)                            null     comment '错误码',
+    error_desc          varchar(32)                            null     comment '错误描述',
+    extra_info          json        default (json_object())    not null comment '扩展字段(JSON)',
+    attach              varchar(256)                           null     comment '回传附加数据',
+    notify_url          varchar(256)                           null     comment '异步通知地址',
+    create_time         datetime    default current_timestamp  not null comment '创建时间',
+    update_time         datetime    default current_timestamp  not null on update current_timestamp comment '更新时间',
+    finish_time         datetime                               null     comment '完成时间',
+    lock_id             varchar(64)                            null     comment 'DB锁',
+    version             int unsigned default 0                 not null comment '乐观锁版本号',
     primary key (id),
-    unique key user_uid_uk (uid),
-    unique key user_uname_uk (uid),
-    index user_email_index (email)
-);
-
-create table auth
-(
-    id          bigint unsigned auto_increment,
-    uid         bigint unsigned                            not null,
-    type        tinyint unsigned default 0                 not null,
-    identifier  varchar(64)                                not null,
-    credential  varchar(64)                                not null,
-    create_time datetime         default CURRENT_TIMESTAMP not null,
-    update_time datetime         default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    primary key (id),
-    index user_uid_index (uid),
-    index user_identifier_index (identifier)
-);
+    unique key uk_refund_id (refund_id),
+    unique key uk_out_refund_id (merchant_id, out_refund_id),
+    index idx_origin_trade_id (origin_trade_id)
+) comment='退款表';

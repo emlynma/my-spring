@@ -7,10 +7,8 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TradeExtraInfo {
+public class RefundExtraInfo {
 
-    private String ip;
-    private String lat;
-    private String lng;
+    private String refundReason;
 
 }
