@@ -1,0 +1,71 @@
+# 模式配置
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+
+#props:
+#  sql-show: true
+
+# 数据源配置
+dataSources:
+  my_spring:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/my_spring?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+
+# 分片规则配置
+rules:
+  - !SHARDING
+    tables:
+      payment:
+        actualDataNodes: my_spring.payment_$->{0..1}
+        tableStrategy:
+          complex:
+            shardingColumns: trade_id,out_trade_id
+            shardingAlgorithmName: trade_sharding
+      refund:
+        actualDataNodes: my_spring.refund_$->{0..1}
+        tableStrategy:
+          complex:
+            shardingColumns: trade_id,out_trade_id
+            shardingAlgorithmName: trade_sharding
+      recharge:
+        actualDataNodes: my_spring.recharge_$->{0..1}
+        tableStrategy:
+          complex:
+            shardingColumns: trade_id,out_trade_id
+            shardingAlgorithmName: trade_sharding
+      withdraw:
+        actualDataNodes: my_spring.withdraw_$->{0..1}
+        tableStrategy:
+          complex:
+            shardingColumns: trade_id,out_trade_id
+            shardingAlgorithmName: trade_sharding
+      exchange:
+        actualDataNodes: my_spring.exchange_$->{0..1}
+        tableStrategy:
+          complex:
+            shardingColumns: trade_id,exchange_id
+            shardingAlgorithmName: trade_sharding
+    shardingAlgorithms:
+      trade_sharding:
+        type: CLASS_BASED
+        props:
+          strategy: COMPLEX
+          algorithmClassName: com.emlyn.spring.data.component.sharding.TradeShardingAlgorithm
+          shardingCount: 2
+#      trade_sharding:
+#        type: COMPLEX_INLINE
+#        props:
+#          algorithm-expression: >
+#            trade_$->{
+#              if (trade_id != null) {
+#                return trade_id.takeRight(3).toInteger() % 2;
+#              }
+#              if (out_trade_id != null) {
+#                return Math.abs(out_trade_id.hashCode()).toString().takeRight(3).toInteger() % 2;
+#              }
+#            }
