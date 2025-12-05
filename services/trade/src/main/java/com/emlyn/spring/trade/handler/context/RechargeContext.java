@@ -1,6 +1,7 @@
 package com.emlyn.spring.trade.handler.context;
 
 import com.emlyn.spring.common.handler.context.BizContext;
+import com.emlyn.spring.common.handler.lock.Lock;
 import com.emlyn.spring.data.domain.entity.Recharge;
 import com.emlyn.spring.data.domain.enums.TradeType;
 import com.emlyn.spring.data.domain.enums.status.RechargeStatus;
@@ -15,6 +16,8 @@ public class RechargeContext implements BizContext<RechargeRequest, RechargeResp
     private RechargeRequest request;
 
     private RechargeResponse response;
+
+    private Lock lock;
 
     private UserInfo userInfo;
 

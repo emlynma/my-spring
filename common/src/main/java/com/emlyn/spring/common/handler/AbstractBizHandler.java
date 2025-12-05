@@ -2,8 +2,8 @@ package com.emlyn.spring.common.handler;
 
 import com.emlyn.spring.common.exception.BizException;
 import com.emlyn.spring.common.exception.SysException;
-import com.emlyn.spring.common.handler.context.BizContext;
 import com.emlyn.spring.common.handler.exception.BizExceptionDispatcher;
+import com.emlyn.spring.common.handler.lock.Lock;
 import com.emlyn.spring.common.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class AbstractBizHandler<Request, Response> implements BizHandler<Request, Response> {
 
-    protected final ThreadLocal<BizContext<Request, Response>> ContextHolder = new ThreadLocal<>();
+    protected final ThreadLocal<Lock> LockHolder = new ThreadLocal<>();
 
     @Override
     public Response handle(Request request) {
@@ -34,8 +34,21 @@ public abstract class AbstractBizHandler<Request, Response> implements BizHandle
             throw e;
 
         } finally {
-            ContextHolder.remove();
+            unlock();
         }
+    }
+
+    public void locked(Lock lock) {
+        LockHolder.set(lock);
+        lock.locked();
+    }
+
+    private void unlock() {
+        var lock = LockHolder.get();
+        if (lock != null) {
+            lock.unlock();
+        }
+        LockHolder.remove();
     }
 
     protected abstract Response doHandle(Request request);

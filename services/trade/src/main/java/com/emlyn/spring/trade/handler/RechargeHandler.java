@@ -2,6 +2,7 @@ package com.emlyn.spring.trade.handler;
 
 import com.emlyn.spring.common.handler.AbstractBizHandler;
 import com.emlyn.spring.common.handler.annotation.Handler;
+import com.emlyn.spring.data.component.lock.LockFactory;
 import com.emlyn.spring.trade.domain.model.UserInfo;
 import com.emlyn.spring.trade.handler.context.RechargeContext;
 import com.emlyn.spring.trade.handler.request.RechargeRequest;
@@ -18,6 +19,7 @@ public class RechargeHandler extends AbstractBizHandler<RechargeRequest, Recharg
     private final RechargeCheckService rechargeCheckService;
     private final RechargeTransService rechargeTransService;
     private final UserService userService;
+    private final LockFactory lockFactory;
 
     @Override
     protected RechargeResponse doHandle(RechargeRequest request) {
@@ -33,6 +35,7 @@ public class RechargeHandler extends AbstractBizHandler<RechargeRequest, Recharg
         context.setRecharge(recharge);
 
         // 加锁
+        locked(lockFactory.createRechargeLock(recharge.getTradeId()));
 
         // 查询用户信息
         UserInfo userInfo = userService.queryUserInfo(request.getUid());
@@ -46,14 +49,6 @@ public class RechargeHandler extends AbstractBizHandler<RechargeRequest, Recharg
 
         // 构建响应结果
         return context.buildResponse();
-    }
-
-
-    private RechargeContext buildContext(RechargeRequest request) {
-        RechargeContext context = new RechargeContext();
-        context.setRequest(request);
-        context.setResponse(new RechargeResponse());
-        return context;
     }
 
 }
