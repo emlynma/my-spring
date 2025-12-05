@@ -31,8 +31,9 @@ public class RechargeRepositoryImpl implements RechargeRepository {
         Assert.isTrue(condition.getTradeId() != null || condition.getOutTradeId() != null, "sharding key(tradeId or outTradeId) must not be all null");
         if (condition.getTradeId() != null) {
             return new LambdaQueryWrapper<Recharge>().eq(Recharge::getTradeId, condition.getTradeId());
+        } else {
+            return new LambdaQueryWrapper<Recharge>().eq(Recharge::getOutTradeId, condition.getOutTradeId());
         }
-        return new LambdaQueryWrapper<Recharge>().eq(Recharge::getOutTradeId, condition.getOutTradeId());
     }
 
     @Override
@@ -43,7 +44,7 @@ public class RechargeRepositoryImpl implements RechargeRepository {
         }
         Recharge record = rechargeMapper.selectOne(buildQueryWrapper(entity));
         CopyUtils.copyNonNullProperties(record, entity, Recharge.class);
-        tradeEventPublisher.publishRechargeEvent(null, entity);
+        tradeEventPublisher.publishEvent(null, entity);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class RechargeRepositoryImpl implements RechargeRepository {
         Recharge backup = new Recharge();
         CopyUtils.copyNonNullProperties(entity, backup, Recharge.class);
         CopyUtils.copyNonNullProperties(update, entity, Recharge.class);
-        tradeEventPublisher.publishRechargeEvent(backup, entity);
+        tradeEventPublisher.publishEvent(backup, entity);
     }
 
     @Override
