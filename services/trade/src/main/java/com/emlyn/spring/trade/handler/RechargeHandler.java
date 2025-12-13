@@ -8,8 +8,8 @@ import com.emlyn.spring.trade.handler.context.RechargeContext;
 import com.emlyn.spring.trade.handler.request.RechargeRequest;
 import com.emlyn.spring.trade.handler.response.RechargeResponse;
 import com.emlyn.spring.trade.service.UserService;
-import com.emlyn.spring.trade.service.recharge.RechargeCheckService;
-import com.emlyn.spring.trade.service.recharge.RechargeTransService;
+import com.emlyn.spring.trade.service.data.recharge.RechargeCheckService;
+import com.emlyn.spring.trade.service.data.recharge.RechargeTransService;
 import lombok.RequiredArgsConstructor;
 
 @Handler
@@ -30,16 +30,16 @@ public class RechargeHandler extends AbstractBizHandler<RechargeRequest, Recharg
         // 幂等校验
         rechargeCheckService.checkCreateIdempotency(request.getOutTradeId());
 
+        // 查询用户信息
+        UserInfo userInfo = userService.queryUserInfo(request.getUid());
+        context.setUserInfo(userInfo);
+
         // 创建单据
         var recharge = rechargeTransService.createRecharge(context.buildRecharge());
         context.setRecharge(recharge);
 
         // 加锁
         locked(lockFactory.createRechargeLock(recharge.getTradeId()));
-
-        // 查询用户信息
-        UserInfo userInfo = userService.queryUserInfo(request.getUid());
-        context.setUserInfo(userInfo);
 
         // 查询XXX信息
 

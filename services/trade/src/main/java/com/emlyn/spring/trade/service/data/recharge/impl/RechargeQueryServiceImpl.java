@@ -1,8 +1,8 @@
-package com.emlyn.spring.trade.service.recharge.impl;
+package com.emlyn.spring.trade.service.data.recharge.impl;
 
 import com.emlyn.spring.data.domain.entity.Recharge;
 import com.emlyn.spring.data.repository.RechargeRepository;
-import com.emlyn.spring.trade.service.recharge.RechargeQueryService;
+import com.emlyn.spring.trade.service.data.recharge.RechargeQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

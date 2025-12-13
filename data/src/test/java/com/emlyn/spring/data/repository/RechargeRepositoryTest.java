@@ -74,7 +74,7 @@ public class RechargeRepositoryTest {
         Recharge recharge = new Recharge();
         recharge.setChannelId("test_channel");
         recharge.setOutTradeId("test_outer_id_123456");
-        recharge.setTradeId(tradeIdGenerator.generateIdWithOuterId(TradeType.RECHARGE, "test_outer_id_123456"));
+        recharge.setTradeId(tradeIdGenerator.generateTradeIdWithOuterId(TradeType.RECHARGE, "test_outer_id_123456"));
         recharge.setUid(123456789L);
         recharge.setAmount(100L);
         recharge.setCurrency("CNY");

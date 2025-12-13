@@ -20,10 +20,10 @@ public class TradeIdGenerator {
     /**
      * generate 32 bit unique tradeId
      */
-    public String generate(TradeType tradeType, String sharding) {
+    public String generate(String flag, String sharding) {
         StringBuilder tradeId = new StringBuilder();
-        // trade type 2 bit
-        tradeId.append(tradeType.getCode());
+        // flag 2 bit
+        tradeId.append(flag);
         // date 8 bit (yyyyMMdd)
         tradeId.append(LocalDate.now().format(formatter));
         // fixed 5 bit
@@ -36,13 +36,17 @@ public class TradeIdGenerator {
         return tradeId.toString();
     }
 
-    public String generateIdWithOuterId(TradeType tradeType, String outerId) {
+    public String generateTradeIdWithOuterId(TradeType tradeType, String outerId) {
         String crc32 = HashUtils.crc32(outerId);
-        return generate(tradeType, crc32.substring(crc32.length() - 1));
+        return generate(String.valueOf(tradeType.getCode()), crc32.substring(crc32.length() - 1));
     }
 
-    public String generateIdWithInnerId(TradeType tradeType, String innerId) {
-        return generate(tradeType, innerId.substring(innerId.length() - 1));
+    public String generateTradeIdWithInnerId(TradeType tradeType, String innerId) {
+        return generate(String.valueOf(tradeType.getCode()), innerId.substring(innerId.length() - 1));
+    }
+
+    public String generateExchangeIdWithTradeId(String tradeId) {
+        return generate("EX", tradeId.substring(tradeId.length() - 1));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.emlyn.spring.trade.service.recharge;
+package com.emlyn.spring.trade.service.data.recharge;
 
 import com.emlyn.spring.data.domain.entity.Recharge;
 

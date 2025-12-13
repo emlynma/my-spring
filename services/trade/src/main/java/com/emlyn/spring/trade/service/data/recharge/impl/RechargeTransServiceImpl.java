@@ -1,4 +1,4 @@
-package com.emlyn.spring.trade.service.recharge.impl;
+package com.emlyn.spring.trade.service.data.recharge.impl;
 
 import com.emlyn.spring.common.error.SysErrorCode;
 import com.emlyn.spring.common.util.AssertUtils;
@@ -7,7 +7,7 @@ import com.emlyn.spring.data.domain.entity.Recharge;
 import com.emlyn.spring.data.domain.enums.status.RechargeStatus;
 import com.emlyn.spring.trade.error.TradeErrorCode;
 import com.emlyn.spring.data.repository.RechargeRepository;
-import com.emlyn.spring.trade.service.recharge.RechargeTransService;
+import com.emlyn.spring.trade.service.data.recharge.RechargeTransService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ public class RechargeTransServiceImpl implements RechargeTransService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Recharge createRecharge(Recharge recharge) {
-        recharge.setTradeId(tradeIdGenerator.generateIdWithOuterId(recharge.getTradeType(), recharge.getOutTradeId()));
+        recharge.setTradeId(tradeIdGenerator.generateTradeIdWithOuterId(recharge.getTradeType(), recharge.getOutTradeId()));
         rechargeRepository.insert(recharge);
         return recharge;
     }
