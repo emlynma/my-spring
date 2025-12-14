@@ -1,6 +1,6 @@
 package com.emlyn.spring.common.validation;
 
-import com.emlynma.ms.core.enums.CountryEnum;
+import com.emlyn.spring.common.constant.CountryEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
