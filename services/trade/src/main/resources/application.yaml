@@ -15,10 +15,24 @@ spring:
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 100
+            read-timeout: 200
+            logger-level: full
+          my-spring-exchange:
+            connect-timeout: 100
+            read-timeout: 200
   config:
     import:
       - nacos:application.yaml?group=trade
       - nacos:common.json?group=trade
+
+logging:
+  level:
+    com.emlyn.spring.trade.client: debug
 
 mybatis-plus:
   configuration:

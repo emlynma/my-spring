@@ -17,20 +17,20 @@ public class ExceptionHandlerAdvice {
     public ApiResponse<?> handleException(BizException exception) {
         ErrorCode errorCode = exception.getErrorCode();
         log.error("{}", errorCode, exception);
-        return ApiResponse.error(errorCode);
+        return ApiResponse.failure(errorCode);
     }
 
     @ExceptionHandler(SysException.class)
     public ApiResponse<?> handleException(SysException exception) {
         ErrorCode errorCode = exception.getErrorCode();
         log.error("{}", errorCode, exception);
-        return ApiResponse.error(errorCode);
+        return ApiResponse.failure(errorCode);
     }
 
     @ExceptionHandler(Exception.class)
     public ApiResponse<?> handleException(Exception exception) {
         log.error("{}", SysErrorCode.UNKNOWN, exception);
-        return ApiResponse.error(SysErrorCode.UNKNOWN);
+        return ApiResponse.failure(SysErrorCode.UNKNOWN);
     }
 
 }

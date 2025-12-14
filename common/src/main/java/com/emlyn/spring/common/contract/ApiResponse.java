@@ -3,11 +3,13 @@ package com.emlyn.spring.common.contract;
 import com.emlyn.spring.common.error.ErrorCode;
 import com.emlyn.spring.common.error.SysErrorCode;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiResponse<T> {
@@ -26,8 +28,12 @@ public class ApiResponse<T> {
         return new ApiResponse<>(SysErrorCode.SUCCESS, data);
     }
 
-    public static <T> ApiResponse<T> error(ErrorCode errorCode) {
+    public static <T> ApiResponse<T> failure(ErrorCode errorCode) {
         return new ApiResponse<>(errorCode, null);
+    }
+
+    public boolean successful() {
+        return SysErrorCode.SUCCESS.getCode().equals(this.code);
     }
 
 }

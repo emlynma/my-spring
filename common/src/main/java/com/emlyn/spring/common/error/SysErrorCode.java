@@ -10,8 +10,9 @@ public enum SysErrorCode implements ErrorCode {
     SUCCESS("20000", "success"),
     UNKNOWN("50000", "system unknown error"),
 
-    RPC_FAILED("50001", "rpc failed"),
+    RPC_FAILURE("50001", "rpc failure"),
     RPC_TIMEOUT("50002", "rpc timeout"),
+    RPC_ILLEGAL("50003", "rpc illegal"),
 
     DB_INSERT_ERROR("50011", "database insert error"),
     DB_UPDATE_ERROR("50012", "database update error"),
