@@ -73,4 +73,9 @@ public class WithdrawRepositoryImpl implements WithdrawRepository {
         return withdrawMapper.selectList(buildQueryWrapper(condition));
     }
 
+    @Override
+    public Withdraw selectOne(Withdraw condition) {
+        return withdrawMapper.selectOne(buildQueryWrapper(condition));
+    }
+
 }

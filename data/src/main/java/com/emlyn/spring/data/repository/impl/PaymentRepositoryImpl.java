@@ -73,4 +73,9 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         return paymentMapper.selectList(buildQueryWrapper(condition));
     }
 
+    @Override
+    public Payment selectOne(Payment condition) {
+        return paymentMapper.selectOne(buildQueryWrapper(condition));
+    }
+
 }

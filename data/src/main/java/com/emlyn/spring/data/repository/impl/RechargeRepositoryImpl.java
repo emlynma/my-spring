@@ -73,4 +73,9 @@ public class RechargeRepositoryImpl implements RechargeRepository {
         return rechargeMapper.selectList(buildQueryWrapper(condition));
     }
 
+    @Override
+    public Recharge selectOne(Recharge condition) {
+        return rechargeMapper.selectOne(buildQueryWrapper(condition));
+    }
+
 }

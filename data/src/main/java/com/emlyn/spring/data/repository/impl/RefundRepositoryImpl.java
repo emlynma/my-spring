@@ -73,4 +73,9 @@ public class RefundRepositoryImpl implements RefundRepository {
         return refundMapper.selectList(buildQueryWrapper(condition));
     }
 
+    @Override
+    public Refund selectOne(Refund condition) {
+        return refundMapper.selectOne(buildQueryWrapper(condition));
+    }
+
 }

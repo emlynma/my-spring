@@ -73,4 +73,9 @@ public class ExchangeRepositoryImpl implements ExchangeRepository {
         return exchangeMapper.selectList(buildQueryWrapper(condition));
     }
 
+    @Override
+    public Exchange selectOne(Exchange condition) {
+        return exchangeMapper.selectOne(buildQueryWrapper(condition));
+    }
+
 }

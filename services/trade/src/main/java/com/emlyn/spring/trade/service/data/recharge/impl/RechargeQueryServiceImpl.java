@@ -19,18 +19,14 @@ public class RechargeQueryServiceImpl implements RechargeQueryService {
     public Recharge queryByTradeId(String tradeId) {
         Recharge condition = new Recharge();
         condition.setTradeId(tradeId);
-        List<Recharge> rechargeList = rechargeRepository.select(condition);
-        Assert.isTrue(rechargeList.size() == 1, "Recharge queryByTradeId not unique, tradeId: " + tradeId);
-        return rechargeList.get(0);
+        return rechargeRepository.selectOne(condition);
     }
 
     @Override
     public Recharge queryByOutTradeId(String outTradeId) {
         Recharge condition = new Recharge();
         condition.setOutTradeId(outTradeId);
-        List<Recharge> rechargeList = rechargeRepository.select(condition);
-        Assert.isTrue(rechargeList.size() == 1, "Recharge queryByOutTradeId not unique, outTradeId: " + outTradeId);
-        return rechargeList.get(0);
+        return rechargeRepository.selectOne(condition);
     }
 
 
