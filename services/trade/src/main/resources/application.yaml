@@ -9,12 +9,22 @@ spring:
     name: my-spring-trade
   profiles:
     active: dev
+  config:
+    import: "optional:consul:"
   datasource:
     url: jdbc:shardingsphere:classpath:sharding.yaml
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
   cloud:
-    nacos:
-      server-addr: 127.0.0.1:8848
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /trade/actuator/health
+      config:
+        enabled: true
+        format: yaml
+        watch:
+          enabled: true
     openfeign:
       client:
         config:
@@ -25,10 +35,6 @@ spring:
           my-spring-exchange:
             connect-timeout: 100
             read-timeout: 200
-  config:
-    import:
-      - nacos:application.yaml?group=trade
-      - nacos:common.json?group=trade
 
 logging:
   level:

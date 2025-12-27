@@ -8,11 +8,11 @@ spring:
   profiles:
     active: dev
   cloud:
-    nacos:
-      server-addr: 127.0.0.1:8848
+    consul:
+      host: localhost
+      port: 8500
       config:
-        import-check:
-          enabled: false
+        enabled: false
 
 ---
 spring:

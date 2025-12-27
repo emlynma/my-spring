@@ -1,7 +1,7 @@
 package com.emlyn.spring.trade.controller;
 
 import com.emlyn.spring.common.contract.ApiResponse;
-import com.emlyn.spring.trade.domain.config.CommonConfig;
+import com.emlyn.spring.trade.domain.config.ApplicationConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    private final CommonConfig commonConfig;
+    private final ApplicationConfig applicationConfig;
 
     @RequestMapping("/config")
-    public ApiResponse<CommonConfig> test() {
-        return ApiResponse.success(commonConfig);
+    public ApiResponse<ApplicationConfig> test() {
+        return ApiResponse.success(applicationConfig);
     }
 
 }

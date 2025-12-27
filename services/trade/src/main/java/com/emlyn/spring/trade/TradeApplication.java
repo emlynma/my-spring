@@ -1,6 +1,5 @@
 package com.emlyn.spring.trade;
 
-import com.emlyn.spring.common.constant.Constant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan(Constant.BASE_PACKAGE)
+@ComponentScan(value = {"com.emlyn.spring.trade", "com.emlyn.spring.data", "com.emlyn.spring.common.component"})
 public class TradeApplication {
 
     public static void main(String[] args) {
