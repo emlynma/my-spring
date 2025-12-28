@@ -1,0 +1,47 @@
+server:
+  port: 80
+  shutdown: graceful
+
+spring:
+  application:
+    name: my-spring-gateway
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        health-check-path: /actuator/health
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: trade-route
+              uri: lb://my-spring-trade
+              predicates:
+                - Path=/trade/**
+            - id: exchange-route
+              uri: lb://my-spring-exchange
+              predicates:
+                - Path=/exchange/**
+  cache:
+    type: caffeine
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod

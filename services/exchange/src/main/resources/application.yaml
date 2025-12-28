@@ -1,6 +1,8 @@
 server:
   port: 8002
   shutdown: graceful
+  servlet:
+    context-path: /exchange
 
 spring:
   application:
@@ -11,6 +13,8 @@ spring:
     consul:
       host: localhost
       port: 8500
+      discovery:
+        health-check-path: /exchange/actuator/health
       config:
         enabled: false
 

@@ -6,11 +6,11 @@ set -euo pipefail
 # 切换到脚本所在目录
 cd "$(dirname "${0}")"
 
+# 重新安装 common 模块
+mvn clean install -pl common -am -DskipTests
+
+# 重新安装 data 模块
+mvn clean install -pl data -am -DskipTests
+
 # 清理项目
 sh clean.sh
-
-# 安装 common 模块
-mvn install -pl common -am -DskipTests
-
-# 安装 data 模块
-mvn install -pl data -am -DskipTests
