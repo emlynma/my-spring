@@ -13,8 +13,8 @@ app_jar="${app}.jar"
 app_pid="./var/${app}.pid"
 app_env="${2:-dev}"
 app_cmd="$(command -v java)"
-app_arg=""
-# app_arg="-Xms512M -Xmx1024M -Xmn192M -Xss512K"
+app_arg=()
+# app_arg=(-Xms512M -Xmx1024M -Xmn192M -Xss512K)
 
 function get_pid() {
   local pid=""
@@ -45,8 +45,8 @@ function start() {
   mkdir -p var >/dev/null 2>&1
   # start app
   echo "starting ${app} with profile: ${app_env} ..."
-  nohup "${app_cmd}" -jar "${app_jar}" "${app_arg}" --spring.profiles.active="${app_env}" >/dev/null 2>&1 &
-  echo $! > "${app_pid}"
+  nohup "${app_cmd}" "${app_arg[@]}" -jar "${app_jar}" --spring.profiles.active="${app_env}" >/dev/null 2>&1 &
+  echo "$!" > "${app_pid}"
   # wait for start result
   sleep 1
   # check start result
