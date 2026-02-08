@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SysErrorCode implements ErrorCode {
 
-    SUCCESS("20000", "success"),
-    UNKNOWN("50000", "system unknown error"),
+    SUCCESS("200", "success"),
+    UNKNOWN("500", "system unknown error"),
 
     RPC_FAILURE("50001", "rpc failure"),
     RPC_TIMEOUT("50002", "rpc timeout"),

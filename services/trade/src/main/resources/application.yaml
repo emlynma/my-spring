@@ -1,8 +1,6 @@
 server:
   port: 8020
   shutdown: graceful
-  servlet:
-    context-path: /trade
 
 spring:
   application:
@@ -18,8 +16,6 @@ spring:
     consul:
       host: localhost
       port: 8500
-      discovery:
-        health-check-path: /trade/actuator/health
       config:
         enabled: true
         format: yaml
@@ -39,6 +35,15 @@ spring:
 logging:
   level:
     com.emlyn.spring.trade.client: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    prometheus:
+      access: unrestricted
 
 mybatis-plus:
   configuration:

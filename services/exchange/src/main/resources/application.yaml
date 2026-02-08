@@ -1,8 +1,6 @@
 server:
   port: 8010
   shutdown: graceful
-  servlet:
-    context-path: /exchange
 
 spring:
   application:
@@ -13,10 +11,17 @@ spring:
     consul:
       host: localhost
       port: 8500
-      discovery:
-        health-check-path: /exchange/actuator/health
       config:
         enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    prometheus:
+      access: unrestricted
 
 ---
 spring:
