@@ -1,4 +1,4 @@
-package com.emlyn.spring.trade.client;
+package com.emlyn.spring.trade.client.feign;
 
 import com.emlyn.spring.common.contract.ApiResponse;
 import com.emlyn.spring.common.contract.exchange.request.PostingRequest;

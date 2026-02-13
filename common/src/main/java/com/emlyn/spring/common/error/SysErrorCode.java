@@ -8,11 +8,10 @@ import lombok.Getter;
 public enum SysErrorCode implements ErrorCode {
 
     SUCCESS("200", "success"),
-    UNKNOWN("500", "system unknown error"),
+    UNKNOWN("500", "system error"),
 
-    RPC_FAILURE("50001", "rpc failure"),
-    RPC_TIMEOUT("50002", "rpc timeout"),
-    RPC_ILLEGAL("50003", "rpc illegal"),
+    RPC_TIMEOUT("510", "rpc timeout"),
+    RPC_FAILURE("511", "rpc failure"),
 
     DB_INSERT_ERROR("50011", "database insert error"),
     DB_UPDATE_ERROR("50012", "database update error"),

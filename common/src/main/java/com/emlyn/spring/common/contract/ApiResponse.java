@@ -36,4 +36,11 @@ public class ApiResponse<T> {
         return SysErrorCode.SUCCESS.getCode().equals(this.code);
     }
 
+    public T getDataOrThrow() {
+        if (successful()) {
+            return data;
+        }
+        throw new RuntimeException("api response unsuccessful, code: " + code + ", desc: " + desc);
+    }
+
 }
