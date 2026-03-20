@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
 
 @Data
 @Builder
@@ -18,7 +17,7 @@ public class ApiResponse<T> {
     private String desc;
     private T      data;
 
-    public ApiResponse(@NonNull ErrorCode errorCode, T data) {
+    public ApiResponse(ErrorCode errorCode, T data) {
         this.code = errorCode.getCode();
         this.desc = errorCode.getDesc();
         this.data = data;
