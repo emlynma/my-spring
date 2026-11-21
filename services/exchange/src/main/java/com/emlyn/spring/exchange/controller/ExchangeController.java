@@ -9,6 +9,7 @@ import com.emlyn.spring.exchange.service.PostingService;
 import com.emlyn.spring.exchange.service.ReverseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,17 +23,17 @@ public class ExchangeController {
     private final ReverseService reverseService;
 
     @PostMapping("/posting")
-    public ApiResponse<ExchangeResponse> posting(PostingRequest request) {
+    public ApiResponse<ExchangeResponse> posting(@RequestBody PostingRequest request) {
         return ApiResponse.success(postingService.posting(request));
     }
 
     @PostMapping("/polling")
-    public ApiResponse<ExchangeResponse> polling(PostingRequest request) {
+    public ApiResponse<ExchangeResponse> polling(@RequestBody PostingRequest request) {
         return ApiResponse.success(pollingService.polling(request));
     }
 
     @PostMapping("/reverse")
-    public ApiResponse<ExchangeResponse> reverse(ReverseRequest request) {
+    public ApiResponse<ExchangeResponse> reverse(@RequestBody ReverseRequest request) {
         return ApiResponse.success(reverseService.reverse(request));
     }
 

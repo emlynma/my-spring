@@ -5,11 +5,12 @@ import com.emlyn.spring.common.contract.exchange.request.PostingRequest;
 import com.emlyn.spring.common.contract.exchange.response.ExchangeResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient("exchange")
 public interface ExchangeFeign {
 
     @PostMapping("/exchange/posting")
-    ApiResponse<ExchangeResponse> posting(PostingRequest request);
+    ApiResponse<ExchangeResponse> posting(@RequestBody PostingRequest request);
 
 }
