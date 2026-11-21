@@ -3,7 +3,7 @@ package com.emlyn.spring.transfer.handler.context;
 import com.emlyn.spring.common.handler.context.BizContext;
 import com.emlyn.spring.common.handler.lock.Lock;
 import com.emlyn.spring.data.domain.entity.Recharge;
-import com.emlyn.spring.data.domain.enums.TradeType;
+import com.emlyn.spring.data.domain.enums.type.TradeType;
 import com.emlyn.spring.data.domain.enums.status.RechargeStatus;
 import com.emlyn.spring.transfer.domain.model.UserInfo;
 import com.emlyn.spring.transfer.handler.request.RechargeRequest;

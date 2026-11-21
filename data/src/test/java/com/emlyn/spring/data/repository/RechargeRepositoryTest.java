@@ -2,11 +2,11 @@ package com.emlyn.spring.data.repository;
 
 import com.emlyn.spring.common.contract.ExtraInfo;
 import com.emlyn.spring.common.exception.SysException;
-import com.emlyn.spring.data.component.id.TradeIdGenerator;
+import com.emlyn.spring.data.component.id.DataIdGenerator;
 import com.emlyn.spring.common.handler.lock.Lock;
 import com.emlyn.spring.data.component.lock.LockFactory;
 import com.emlyn.spring.data.domain.entity.Recharge;
-import com.emlyn.spring.data.domain.enums.TradeType;
+import com.emlyn.spring.data.domain.enums.type.TradeType;
 import com.emlyn.spring.data.domain.enums.status.RechargeStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class RechargeRepositoryTest {
     private RechargeRepository rechargeRepository;
 
     @Autowired
-    private TradeIdGenerator tradeIdGenerator;
+    private DataIdGenerator recordDataIdGenerator;
 
     @Autowired
     private LockFactory lockFactory;
@@ -74,7 +74,7 @@ public class RechargeRepositoryTest {
         Recharge recharge = new Recharge();
         recharge.setChannelId("test_channel");
         recharge.setOutTradeId("test_outer_id_123456");
-        recharge.setTradeId(tradeIdGenerator.generateTradeIdWithOuterId(TradeType.RECHARGE, "test_outer_id_123456"));
+        recharge.setTradeId(recordDataIdGenerator.generateTradeIdWithOuterId(TradeType.RECHARGE, "test_outer_id_123456"));
         recharge.setUid(123456789L);
         recharge.setAmount(100L);
         recharge.setCurrency("CNY");

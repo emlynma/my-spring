@@ -3,7 +3,7 @@ package com.emlyn.spring.transfer.service.impl;
 import com.emlyn.spring.common.contract.exchange.model.AssetInfo;
 import com.emlyn.spring.common.contract.exchange.request.PostingRequest;
 import com.emlyn.spring.common.contract.exchange.response.ExchangeResponse;
-import com.emlyn.spring.data.component.id.TradeIdGenerator;
+import com.emlyn.spring.data.component.id.DataIdGenerator;
 import com.emlyn.spring.data.domain.entity.Exchange;
 import com.emlyn.spring.data.domain.enums.status.ExchangeStatus;
 import com.emlyn.spring.transfer.domain.model.ExchangeParams;
@@ -23,7 +23,7 @@ public class ExchangeServiceImpl implements ExchangeService {
 
     private final ExchangeQueryService exchangeQueryService;
     private final ExchangeTransService exchangeTransService;
-    private final TradeIdGenerator tradeIdGenerator;
+    private final DataIdGenerator recordDataIdGenerator;
 
     @Override
     public ExchangeResult exchange(ExchangeParams request) {
@@ -72,7 +72,7 @@ public class ExchangeServiceImpl implements ExchangeService {
     private Exchange buildExchange(ExchangeParams request) {
         Exchange exchange = new Exchange();
         exchange.setTradeId(request.getTradeId());
-        exchange.setExchangeId(tradeIdGenerator.generateExchangeIdWithTradeId(request.getTradeId()));
+        exchange.setExchangeId(recordDataIdGenerator.generateExchangeIdWithTradeId(request.getTradeId()));
 //        exchange.setExchangeRequest();
 //        exchange.setExchangeResponse();
         exchange.setAmount(request.getAmount());

@@ -1,7 +1,7 @@
 package com.emlyn.spring.transfer.domain.model;
 
-import com.emlyn.spring.data.domain.enums.ExchangeType;
-import com.emlyn.spring.data.domain.enums.TradeType;
+import com.emlyn.spring.data.domain.enums.type.ExchangeType;
+import com.emlyn.spring.data.domain.enums.type.TradeType;
 import lombok.Data;
 
 @Data

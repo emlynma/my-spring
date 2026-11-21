@@ -9,12 +9,13 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TradeShardingAlgorithm implements ComplexKeysShardingAlgorithm<String> {
+public class ShardingAlgorithm implements ComplexKeysShardingAlgorithm<String> {
 
     private static final String SHARDING_COUNT_KEY = "shardingCount";
 
     private static final String TRADE_ID = "trade_id";
     private static final String OUT_TRADE_ID = "out_trade_id";
+    private static final String EXCHANGE_ID = "exchange_id";
 
     private int shardingCount;
 
@@ -36,6 +37,10 @@ public class TradeShardingAlgorithm implements ComplexKeysShardingAlgorithm<Stri
         Set<String> shardingValues = new HashSet<>();
         if (map.containsKey(TRADE_ID)) {
             map.get(TRADE_ID).stream().filter(StringUtils::hasText).forEach(shardingValues::add);
+            return shardingValues;
+        }
+        if (map.containsKey(EXCHANGE_ID)) {
+            map.get(EXCHANGE_ID).stream().filter(StringUtils::hasText).forEach(shardingValues::add);
             return shardingValues;
         }
         if (map.containsKey(OUT_TRADE_ID)) {

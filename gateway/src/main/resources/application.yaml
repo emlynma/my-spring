@@ -11,8 +11,6 @@ spring:
     consul:
       host: localhost
       port: 8500
-      discovery:
-        health-check-path: /actuator/health
     gateway:
       server:
         webmvc:
@@ -21,8 +19,6 @@ spring:
               uri: lb://transfer
               predicates:
                 - Path=/transfer/**
-              filters:
-                - StripPrefix=1
             - id: exchange-route
               uri: lb://exchange
               predicates:

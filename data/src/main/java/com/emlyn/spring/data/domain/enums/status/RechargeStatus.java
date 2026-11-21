@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -17,9 +15,6 @@ public enum RechargeStatus {
     SUCCESS(1, "SUCCESS"),
     REFUSED(2, "REFUSED"),
     ;
-
-    private static final Map<Integer, RechargeStatus> STATUS_MAPPING = Arrays.stream(values())
-            .collect(Collectors.toMap(RechargeStatus::getCode, Function.identity()));
 
     private static final List<RechargeStatus> FINAL_STATUSES = List.of(SUCCESS, REFUSED);
 
@@ -31,10 +26,6 @@ public enum RechargeStatus {
     @JsonValue
     private final Integer code;
     private final String  desc;
-
-    public static RechargeStatus valueOf(Integer code) {
-        return STATUS_MAPPING.get(code);
-    }
 
     public static boolean checkFinal(RechargeStatus status) {
         return FINAL_STATUSES.contains(status);

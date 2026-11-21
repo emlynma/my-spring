@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -18,9 +16,6 @@ public enum WithdrawStatus {
     FAILURE(2, "FAILURE"),
     PENDING(3, "PENDING")
     ;
-
-    private static final Map<Integer, WithdrawStatus> STATUS_MAPPING = Arrays.stream(values())
-            .collect(Collectors.toMap(WithdrawStatus::getCode, Function.identity()));
 
     private static final List<WithdrawStatus> FINAL_STATUSES = List.of(SUCCESS, FAILURE);
 
@@ -33,10 +28,6 @@ public enum WithdrawStatus {
     @JsonValue
     private final Integer code;
     private final String  desc;
-
-    public static WithdrawStatus valueOf(Integer code) {
-        return STATUS_MAPPING.get(code);
-    }
 
     public static boolean checkFinal(WithdrawStatus status) {
         return FINAL_STATUSES.contains(status);

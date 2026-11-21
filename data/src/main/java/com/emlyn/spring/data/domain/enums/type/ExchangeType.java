@@ -1,4 +1,4 @@
-package com.emlyn.spring.data.domain.enums;
+package com.emlyn.spring.data.domain.enums.type;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -7,16 +7,15 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum TradeType {
+public enum ExchangeType {
 
-    RECHARGE(30, "RECHARGE"),
-    WITHDRAW(40, "WITHDRAW"),
-    TRANSFER(50, "TRANSFER")
+    POSTING(1, "POSTING"),
+    REVERSE(2, "REVERSE"),
     ;
 
     @EnumValue
     @JsonValue
     private final Integer code;
-    private final String desc;
+    private final String  desc;
 
 }

@@ -2,7 +2,7 @@ package com.emlyn.spring.transfer.service.data.recharge.impl;
 
 import com.emlyn.spring.common.error.SysErrorCode;
 import com.emlyn.spring.common.util.AssertUtils;
-import com.emlyn.spring.data.component.id.TradeIdGenerator;
+import com.emlyn.spring.data.component.id.DataIdGenerator;
 import com.emlyn.spring.data.domain.entity.Recharge;
 import com.emlyn.spring.data.domain.enums.status.RechargeStatus;
 import com.emlyn.spring.transfer.error.TransferErrorCode;
@@ -20,12 +20,12 @@ public class RechargeTransServiceImpl implements RechargeTransService {
 
     private final RechargeRepository rechargeRepository;
 
-    private final TradeIdGenerator tradeIdGenerator;
+    private final DataIdGenerator recordDataIdGenerator;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Recharge createRecharge(Recharge recharge) {
-        recharge.setTradeId(tradeIdGenerator.generateTradeIdWithOuterId(recharge.getTradeType(), recharge.getOutTradeId()));
+        recharge.setTradeId(recordDataIdGenerator.generateTradeIdWithOuterId(recharge.getTradeType(), recharge.getOutTradeId()));
         rechargeRepository.insert(recharge);
         return recharge;
     }

@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -21,9 +19,6 @@ public enum WithdrawBizStatus {
     EXCHANGE_REVERSE_SUCCESS(5, "EXCHANGE_REVERSE_SUCCESS"),
     EXCHANGE_REVERSE_FAILURE(6, "EXCHANGE_REVERSE_FAILURE"),
     ;
-
-    private static final Map<Integer, WithdrawBizStatus> STATUS_MAPPING = Arrays.stream(values())
-            .collect(Collectors.toMap(WithdrawBizStatus::getCode, Function.identity()));
 
     private static final List<WithdrawBizStatus> FINAL_STATUSES = List.of(
             EXCHANGE_POSTING_SUCCESS, EXCHANGE_POSTING_FAILURE,
@@ -40,10 +35,6 @@ public enum WithdrawBizStatus {
     @JsonValue
     private final Integer code;
     private final String  desc;
-
-    public static WithdrawBizStatus valueOf(Integer code) {
-        return STATUS_MAPPING.get(code);
-    }
 
     public static boolean checkFinal(WithdrawBizStatus status) {
         return FINAL_STATUSES.contains(status);

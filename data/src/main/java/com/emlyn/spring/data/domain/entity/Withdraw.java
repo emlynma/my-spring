@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.emlyn.spring.common.contract.ExtraInfo;
 import com.emlyn.spring.common.error.ErrorCode;
-import com.emlyn.spring.data.domain.enums.TradeType;
+import com.emlyn.spring.data.domain.enums.type.TradeType;
 import com.emlyn.spring.data.domain.enums.status.WithdrawBizStatus;
 import com.emlyn.spring.data.domain.enums.status.WithdrawStatus;
 import lombok.Data;

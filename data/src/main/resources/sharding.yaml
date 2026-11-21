@@ -43,17 +43,5 @@ rules:
         type: CLASS_BASED
         props:
           strategy: COMPLEX
-          algorithmClassName: com.emlyn.spring.data.component.sharding.TradeShardingAlgorithm
+          algorithmClassName: com.emlyn.spring.data.component.sharding.ShardingAlgorithm
           shardingCount: 2
-#      trade_sharding:
-#        type: COMPLEX_INLINE
-#        props:
-#          algorithm-expression: >
-#            trade_$->{
-#              if (trade_id != null) {
-#                return trade_id.takeRight(3).toInteger() % 2;
-#              }
-#              if (out_trade_id != null) {
-#                return Math.abs(out_trade_id.hashCode()).toString().takeRight(3).toInteger() % 2;
-#              }
-#            }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test")
+@RequestMapping("/transfer/test")
 public class TestController {
 
     private final ApplicationConfig applicationConfig;
