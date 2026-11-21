@@ -1,10 +1,10 @@
 server:
-  port: 8010
+  port: 8020
   shutdown: graceful
 
 spring:
   application:
-    name: my-spring-exchange
+    name: exchange
   profiles:
     active: dev
   cloud:

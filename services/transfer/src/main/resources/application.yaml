@@ -1,10 +1,10 @@
 server:
-  port: 8020
+  port: 8010
   shutdown: graceful
 
 spring:
   application:
-    name: my-spring-transfer
+    name: transfer
   profiles:
     active: dev
   config:
@@ -28,7 +28,7 @@ spring:
             connect-timeout: 100
             read-timeout: 200
             logger-level: full
-          my-spring-exchange:
+          exchange:
             connect-timeout: 100
             read-timeout: 200
 

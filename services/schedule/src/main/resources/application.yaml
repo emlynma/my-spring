@@ -1,0 +1,15 @@
+server:
+  port: 8030
+  shutdown: graceful
+
+spring:
+  application:
+    name: schedule
+  profiles:
+    active: dev
+  config:
+    import: "optional:consul:"
+  cloud:
+    consul:
+      host: localhost
+      port: 8500

@@ -1,10 +1,10 @@
 server:
-  port: 80
+  port: 8080
   shutdown: graceful
 
 spring:
   application:
-    name: my-spring-gateway
+    name: gateway
   profiles:
     active: dev
   cloud:
@@ -18,11 +18,13 @@ spring:
         webmvc:
           routes:
             - id: transfer-route
-              uri: lb://my-spring-transfer
+              uri: lb://transfer
               predicates:
                 - Path=/transfer/**
+              filters:
+                - StripPrefix=1
             - id: exchange-route
-              uri: lb://my-spring-exchange
+              uri: lb://exchange
               predicates:
                 - Path=/exchange/**
   cache:

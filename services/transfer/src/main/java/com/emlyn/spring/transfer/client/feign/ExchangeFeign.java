@@ -6,7 +6,7 @@ import com.emlyn.spring.common.contract.exchange.response.ExchangeResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient("my-spring-exchange")
+@FeignClient("exchange")
 public interface ExchangeFeign {
 
     @PostMapping("/exchange/posting")
