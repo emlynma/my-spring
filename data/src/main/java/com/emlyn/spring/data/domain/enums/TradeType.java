@@ -9,8 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TradeType {
 
-    PAYMENT(10, "PAYMENT"),
-    REFUND(20, "REFUND"),
     RECHARGE(30, "RECHARGE"),
     WITHDRAW(40, "WITHDRAW"),
     TRANSFER(50, "TRANSFER")

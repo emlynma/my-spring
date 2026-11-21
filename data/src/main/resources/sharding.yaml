@@ -20,18 +20,6 @@ dataSources:
 rules:
   - !SHARDING
     tables:
-      payment:
-        actualDataNodes: my_spring.payment_$->{0..1}
-        tableStrategy:
-          complex:
-            shardingColumns: trade_id,out_trade_id
-            shardingAlgorithmName: trade_sharding
-      refund:
-        actualDataNodes: my_spring.refund_$->{0..1}
-        tableStrategy:
-          complex:
-            shardingColumns: trade_id,out_trade_id
-            shardingAlgorithmName: trade_sharding
       recharge:
         actualDataNodes: my_spring.recharge_$->{0..1}
         tableStrategy:

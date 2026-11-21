@@ -17,10 +17,10 @@ spring:
       server:
         webmvc:
           routes:
-            - id: trade-route
-              uri: lb://my-spring-trade
+            - id: transfer-route
+              uri: lb://my-spring-transfer
               predicates:
-                - Path=/trade/**
+                - Path=/transfer/**
             - id: exchange-route
               uri: lb://my-spring-exchange
               predicates:

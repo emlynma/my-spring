@@ -14,9 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>trade</module>
+        <module>transfer</module>
         <module>exchange</module>
-        <module>user</module>
+        <module>schedule</module>
     </modules>
 
     <dependencies>

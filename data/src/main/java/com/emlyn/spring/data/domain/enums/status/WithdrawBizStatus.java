@@ -36,16 +36,6 @@ public enum WithdrawBizStatus {
             EXCHANGE_REVERSE, Set.of(EXCHANGE_REVERSE_SUCCESS, EXCHANGE_REVERSE_FAILURE)
     );
 
-    private static final Map<WithdrawBizStatus, PaymentStatus> BIZ_STATUS_MAPPING = Map.of(
-            INITIAL, PaymentStatus.INITIAL,
-            EXCHANGE_POSTING, PaymentStatus.PENDING,
-            EXCHANGE_POSTING_SUCCESS, PaymentStatus.SUCCESS,
-            EXCHANGE_POSTING_FAILURE, PaymentStatus.FAILURE,
-            EXCHANGE_REVERSE, PaymentStatus.PENDING,
-            EXCHANGE_REVERSE_SUCCESS, PaymentStatus.SUCCESS,
-            EXCHANGE_REVERSE_FAILURE, PaymentStatus.FAILURE
-    );
-
     @EnumValue
     @JsonValue
     private final Integer code;
@@ -61,10 +51,6 @@ public enum WithdrawBizStatus {
 
     public static boolean checkReachability(WithdrawBizStatus from, WithdrawBizStatus to) {
         return STATUS_MACHINE.getOrDefault(from, Collections.emptySet()).contains(to);
-    }
-
-    public static PaymentStatus getPaymentStatus(WithdrawBizStatus bizStatus) {
-        return BIZ_STATUS_MAPPING.get(bizStatus);
     }
 
 }

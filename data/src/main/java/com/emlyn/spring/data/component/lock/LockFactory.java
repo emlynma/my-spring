@@ -13,19 +13,9 @@ public class LockFactory {
 
     private static final int DEFAULT_EXPIRE = 10 * 1000; // 10s
 
-    private final PaymentMapper paymentMapper;
-    private final RefundMapper refundMapper;
     private final RechargeMapper rechargeMapper;
     private final WithdrawMapper withdrawMapper;
     private final ExchangeMapper exchangeMapper;
-
-    public Lock createPaymentLock(String tradeId) {
-        return new LockImpl(paymentMapper, tradeId, UUID.randomUUID().toString(), DEFAULT_EXPIRE);
-    }
-
-    public Lock createRefundLock(String tradeId) {
-        return new LockImpl(refundMapper, tradeId, UUID.randomUUID().toString(), DEFAULT_EXPIRE);
-    }
 
     public Lock createRechargeLock(String tradeId) {
         return new LockImpl(rechargeMapper, tradeId, UUID.randomUUID().toString(), DEFAULT_EXPIRE);

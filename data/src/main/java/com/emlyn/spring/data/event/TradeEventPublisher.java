@@ -14,14 +14,6 @@ public class TradeEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishEvent(Payment oldRecord, Payment newRecord) {
-        applicationEventPublisher.publishEvent(new PaymentEvent(oldRecord, newRecord));
-    }
-
-    public void publishEvent(Refund oldRecord, Refund newRecord) {
-        applicationEventPublisher.publishEvent(new RefundEvent(oldRecord, newRecord));
-    }
-
     public void publishEvent(Recharge oldRecord, Recharge newRecord) {
         applicationEventPublisher.publishEvent(new RechargeEvent(oldRecord, newRecord));
     }
