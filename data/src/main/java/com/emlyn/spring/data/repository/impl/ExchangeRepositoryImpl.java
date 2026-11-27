@@ -23,16 +23,19 @@ public class ExchangeRepositoryImpl implements ExchangeRepository {
     private final TradeEventPublisher tradeEventPublisher;
 
     private LambdaUpdateWrapper<Exchange> buildUpdateWrapper(Exchange condition) {
-        Assert.isTrue(condition.getTradeId() != null, "sharding key(tradeId) must not be all null");
-        return new LambdaUpdateWrapper<Exchange>().eq(Exchange::getTradeId, condition.getTradeId());
+        Assert.isTrue(condition.getExchangeId() != null, "sharding key must not be null");
+        return new LambdaUpdateWrapper<Exchange>()
+                .eq(Exchange::getExchangeId, condition.getExchangeId())
+                .eq(Exchange::getVersion, condition.getVersion())
+                ;
     }
 
     private LambdaQueryWrapper<Exchange> buildQueryWrapper(Exchange condition) {
-        Assert.isTrue(condition.getTradeId() != null || condition.getExchangeId() != null, "sharding key(tradeId or exchangeId) must not be all null");
-        if (condition.getTradeId() != null) {
-            return new LambdaQueryWrapper<Exchange>().eq(Exchange::getTradeId, condition.getTradeId());
-        } else {
+        Assert.isTrue(condition.getExchangeId() != null || condition.getTradeId() != null, "sharding key must not be null");
+        if (condition.getExchangeId() != null) {
             return new LambdaQueryWrapper<Exchange>().eq(Exchange::getExchangeId, condition.getExchangeId());
+        } else {
+            return new LambdaQueryWrapper<Exchange>().eq(Exchange::getTradeId, condition.getTradeId());
         }
     }
 
@@ -43,7 +46,7 @@ public class ExchangeRepositoryImpl implements ExchangeRepository {
             throw new SysException(SysErrorCode.DB_INSERT_ERROR);
         }
         Exchange record = exchangeMapper.selectOne(buildQueryWrapper(entity));
-        CopyUtils.copyNonNullProperties(record, entity, Exchange.class);
+        CopyUtils.copyProperties(record, entity, Exchange.class);
         tradeEventPublisher.publishEvent(null, entity);
     }
 
@@ -63,8 +66,8 @@ public class ExchangeRepositoryImpl implements ExchangeRepository {
             throw new SysException(SysErrorCode.DB_UPDATE_ERROR);
         }
         Exchange backup = new Exchange();
-        CopyUtils.copyNonNullProperties(entity, backup, Exchange.class);
-        CopyUtils.copyNonNullProperties(update, entity, Exchange.class);
+        CopyUtils.copyProperties(entity, backup, Exchange.class);
+        CopyUtils.copyProperties(update, entity, Exchange.class);
         tradeEventPublisher.publishEvent(backup, entity);
     }
 

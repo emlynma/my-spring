@@ -23,12 +23,15 @@ public class WithdrawRepositoryImpl implements WithdrawRepository {
     private final TradeEventPublisher tradeEventPublisher;
 
     private LambdaUpdateWrapper<Withdraw> buildUpdateWrapper(Withdraw condition) {
-        Assert.isTrue(condition.getTradeId() != null, "sharding key(tradeId) must not be all null");
-        return new LambdaUpdateWrapper<Withdraw>().eq(Withdraw::getTradeId, condition.getTradeId());
+        Assert.isTrue(condition.getTradeId() != null, "sharding key must not be null");
+        return new LambdaUpdateWrapper<Withdraw>()
+                .eq(Withdraw::getTradeId, condition.getTradeId())
+                .eq(Withdraw::getVersion, condition.getVersion())
+                ;
     }
 
     private LambdaQueryWrapper<Withdraw> buildQueryWrapper(Withdraw condition) {
-        Assert.isTrue(condition.getTradeId() != null || condition.getOutTradeId() != null, "sharding key(tradeId or outTradeId) must not be all null");
+        Assert.isTrue(condition.getTradeId() != null || condition.getOutTradeId() != null, "sharding key must not be null");
         if (condition.getTradeId() != null) {
             return new LambdaQueryWrapper<Withdraw>().eq(Withdraw::getTradeId, condition.getTradeId());
         } else {
@@ -43,7 +46,7 @@ public class WithdrawRepositoryImpl implements WithdrawRepository {
             throw new SysException(SysErrorCode.DB_INSERT_ERROR);
         }
         Withdraw record = withdrawMapper.selectOne(buildQueryWrapper(entity));
-        CopyUtils.copyNonNullProperties(record, entity, Withdraw.class);
+        CopyUtils.copyProperties(record, entity, Withdraw.class);
         tradeEventPublisher.publishEvent(null, entity);
     }
 
@@ -57,14 +60,15 @@ public class WithdrawRepositoryImpl implements WithdrawRepository {
 
     @Override
     public void update(Withdraw entity, Withdraw update) {
+
         update.setVersion(entity.getVersion() + 1);
         int effect = withdrawMapper.update(update, buildUpdateWrapper(entity));
         if (effect != 1) {
             throw new SysException(SysErrorCode.DB_UPDATE_ERROR);
         }
         Withdraw backup = new Withdraw();
-        CopyUtils.copyNonNullProperties(entity, backup, Withdraw.class);
-        CopyUtils.copyNonNullProperties(update, entity, Withdraw.class);
+        CopyUtils.copyProperties(entity, backup, Withdraw.class);
+        CopyUtils.copyProperties(update, entity, Withdraw.class);
         tradeEventPublisher.publishEvent(backup, entity);
     }
 

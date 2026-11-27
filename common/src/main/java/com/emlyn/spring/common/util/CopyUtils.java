@@ -9,9 +9,9 @@ import java.lang.reflect.Field;
 public class CopyUtils {
 
     @SneakyThrows
-    public static void copyNonNullProperties(Object source, Object target, Class<?> type) {
+    public static void copyProperties(Object source, Object target, Class<?> type) {
         if (!type.isInstance(source) || !type.isInstance(target)) {
-            throw new ClassCastException("class not match");
+            throw new ClassCastException();
         }
         Field[] fields = source.getClass().getDeclaredFields();
         for (Field field : fields) {

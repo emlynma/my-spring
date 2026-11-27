@@ -23,12 +23,15 @@ public class RechargeRepositoryImpl implements RechargeRepository {
     private final TradeEventPublisher tradeEventPublisher;
 
     private LambdaUpdateWrapper<Recharge> buildUpdateWrapper(Recharge condition) {
-        Assert.isTrue(condition.getTradeId() != null, "sharding key(tradeId) must not be all null");
-        return new LambdaUpdateWrapper<Recharge>().eq(Recharge::getTradeId, condition.getTradeId());
+        Assert.isTrue(condition.getTradeId() != null, "sharding key must not be null");
+        return new LambdaUpdateWrapper<Recharge>()
+                .eq(Recharge::getTradeId, condition.getTradeId())
+                .eq(Recharge::getVersion, condition.getVersion())
+                ;
     }
 
     private LambdaQueryWrapper<Recharge> buildQueryWrapper(Recharge condition) {
-        Assert.isTrue(condition.getTradeId() != null || condition.getOutTradeId() != null, "sharding key(tradeId or outTradeId) must not be all null");
+        Assert.isTrue(condition.getTradeId() != null || condition.getOutTradeId() != null, "sharding key must not be null");
         if (condition.getTradeId() != null) {
             return new LambdaQueryWrapper<Recharge>().eq(Recharge::getTradeId, condition.getTradeId());
         } else {
@@ -43,7 +46,7 @@ public class RechargeRepositoryImpl implements RechargeRepository {
             throw new SysException(SysErrorCode.DB_INSERT_ERROR);
         }
         Recharge record = rechargeMapper.selectOne(buildQueryWrapper(entity));
-        CopyUtils.copyNonNullProperties(record, entity, Recharge.class);
+        CopyUtils.copyProperties(record, entity, Recharge.class);
         tradeEventPublisher.publishEvent(null, entity);
     }
 
@@ -63,8 +66,8 @@ public class RechargeRepositoryImpl implements RechargeRepository {
             throw new SysException(SysErrorCode.DB_UPDATE_ERROR);
         }
         Recharge backup = new Recharge();
-        CopyUtils.copyNonNullProperties(entity, backup, Recharge.class);
-        CopyUtils.copyNonNullProperties(update, entity, Recharge.class);
+        CopyUtils.copyProperties(entity, backup, Recharge.class);
+        CopyUtils.copyProperties(update, entity, Recharge.class);
         tradeEventPublisher.publishEvent(backup, entity);
     }
 
