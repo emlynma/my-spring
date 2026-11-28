@@ -3,14 +3,12 @@ package com.emlyn.spring.data.event;
 import com.emlyn.spring.data.domain.entity.*;
 import com.emlyn.spring.data.event.event.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
-public class TradeEventPublisher {
+public class EventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 

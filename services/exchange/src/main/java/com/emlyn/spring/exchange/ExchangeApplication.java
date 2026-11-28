@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(value = {"com.emlyn.spring.exchange", "com.emlyn.spring.common.component"})
+@ComponentScan(value = {"com.emlyn.spring.exchange", "com.emlyn.spring.data", "com.emlyn.spring.common.component"})
 public class ExchangeApplication {
 
     public static void main(String[] args) {

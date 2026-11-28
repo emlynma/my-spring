@@ -7,7 +7,7 @@ import com.emlyn.spring.common.exception.SysException;
 import com.emlyn.spring.common.util.CopyUtils;
 import com.emlyn.spring.data.domain.entity.Recharge;
 import com.emlyn.spring.data.repository.RechargeRepository;
-import com.emlyn.spring.data.event.TradeEventPublisher;
+import com.emlyn.spring.data.event.EventPublisher;
 import com.emlyn.spring.data.mapper.RechargeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,7 +20,7 @@ import java.util.List;
 public class RechargeRepositoryImpl implements RechargeRepository {
 
     private final RechargeMapper rechargeMapper;
-    private final TradeEventPublisher tradeEventPublisher;
+    private final EventPublisher eventPublisher;
 
     private LambdaUpdateWrapper<Recharge> buildUpdateWrapper(Recharge condition) {
         Assert.isTrue(condition.getTradeId() != null, "sharding key must not be null");
@@ -47,7 +47,7 @@ public class RechargeRepositoryImpl implements RechargeRepository {
         }
         Recharge record = rechargeMapper.selectOne(buildQueryWrapper(entity));
         CopyUtils.copyProperties(record, entity, Recharge.class);
-        tradeEventPublisher.publishEvent(null, entity);
+        eventPublisher.publishEvent(null, entity);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class RechargeRepositoryImpl implements RechargeRepository {
         Recharge backup = new Recharge();
         CopyUtils.copyProperties(entity, backup, Recharge.class);
         CopyUtils.copyProperties(update, entity, Recharge.class);
-        tradeEventPublisher.publishEvent(backup, entity);
+        eventPublisher.publishEvent(backup, entity);
     }
 
     @Override

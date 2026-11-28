@@ -6,7 +6,7 @@ import com.emlyn.spring.common.error.SysErrorCode;
 import com.emlyn.spring.common.exception.SysException;
 import com.emlyn.spring.common.util.CopyUtils;
 import com.emlyn.spring.data.domain.entity.Exchange;
-import com.emlyn.spring.data.event.TradeEventPublisher;
+import com.emlyn.spring.data.event.EventPublisher;
 import com.emlyn.spring.data.mapper.ExchangeMapper;
 import com.emlyn.spring.data.repository.ExchangeRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ExchangeRepositoryImpl implements ExchangeRepository {
 
     private final ExchangeMapper exchangeMapper;
-    private final TradeEventPublisher tradeEventPublisher;
+    private final EventPublisher eventPublisher;
 
     private LambdaUpdateWrapper<Exchange> buildUpdateWrapper(Exchange condition) {
         Assert.isTrue(condition.getExchangeId() != null, "sharding key must not be null");
@@ -47,7 +47,7 @@ public class ExchangeRepositoryImpl implements ExchangeRepository {
         }
         Exchange record = exchangeMapper.selectOne(buildQueryWrapper(entity));
         CopyUtils.copyProperties(record, entity, Exchange.class);
-        tradeEventPublisher.publishEvent(null, entity);
+        eventPublisher.publishEvent(null, entity);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ExchangeRepositoryImpl implements ExchangeRepository {
         Exchange backup = new Exchange();
         CopyUtils.copyProperties(entity, backup, Exchange.class);
         CopyUtils.copyProperties(update, entity, Exchange.class);
-        tradeEventPublisher.publishEvent(backup, entity);
+        eventPublisher.publishEvent(backup, entity);
     }
 
     @Override

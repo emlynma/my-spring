@@ -52,10 +52,22 @@ public class RechargeTransServiceImpl implements RechargeTransService {
         update.setStatus(status);
         if (RechargeStatus.checkFinal(status)) {
             update.setFinishTime(new Date());
-            if (RechargeStatus.SUCCESS == status) update.setError(SysErrorCode.SUCCESS);
+            setDefaultErrorCode(update);
         }
         // 执行更新
         rechargeRepository.update(recharge, update);
+    }
+
+    private void setDefaultErrorCode(Recharge update) {
+        if (RechargeStatus.SUCCESS == update.getStatus()) {
+            update.setError(SysErrorCode.SUCCESS);
+        }
+        if (RechargeStatus.REFUSED == update.getStatus()) {
+            if (update.getErrorCode() != null) {
+                return;
+            }
+            update.setError(SysErrorCode.UNKNOWN);
+        }
     }
 
 }

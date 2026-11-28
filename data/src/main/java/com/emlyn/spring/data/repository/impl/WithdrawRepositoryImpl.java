@@ -6,7 +6,7 @@ import com.emlyn.spring.common.error.SysErrorCode;
 import com.emlyn.spring.common.exception.SysException;
 import com.emlyn.spring.common.util.CopyUtils;
 import com.emlyn.spring.data.domain.entity.Withdraw;
-import com.emlyn.spring.data.event.TradeEventPublisher;
+import com.emlyn.spring.data.event.EventPublisher;
 import com.emlyn.spring.data.mapper.WithdrawMapper;
 import com.emlyn.spring.data.repository.WithdrawRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.List;
 public class WithdrawRepositoryImpl implements WithdrawRepository {
 
     private final WithdrawMapper withdrawMapper;
-    private final TradeEventPublisher tradeEventPublisher;
+    private final EventPublisher eventPublisher;
 
     private LambdaUpdateWrapper<Withdraw> buildUpdateWrapper(Withdraw condition) {
         Assert.isTrue(condition.getTradeId() != null, "sharding key must not be null");
@@ -47,7 +47,7 @@ public class WithdrawRepositoryImpl implements WithdrawRepository {
         }
         Withdraw record = withdrawMapper.selectOne(buildQueryWrapper(entity));
         CopyUtils.copyProperties(record, entity, Withdraw.class);
-        tradeEventPublisher.publishEvent(null, entity);
+        eventPublisher.publishEvent(null, entity);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class WithdrawRepositoryImpl implements WithdrawRepository {
         Withdraw backup = new Withdraw();
         CopyUtils.copyProperties(entity, backup, Withdraw.class);
         CopyUtils.copyProperties(update, entity, Withdraw.class);
-        tradeEventPublisher.publishEvent(backup, entity);
+        eventPublisher.publishEvent(backup, entity);
     }
 
     @Override
